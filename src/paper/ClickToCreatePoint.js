@@ -1,17 +1,25 @@
-import { create } from "../figures/figureSlice";
-import Point from "../figures/Point";
-import { getNextName } from "../figures/Point";
-import PaperMode from "./PaperMode";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-class ClickToCreatePoint extends PaperMode {
-  get modeName() {
-    return "Click to create new point";
-  }
-  onClick(event) {
-    const value = { x: event.clientX, y: event.clientY };
-    const point = new Point(getNextName(), value);
-    return create(point);
-  }
+import { create } from "../figures/figureSlice";
+import Point, { getNextName } from "../figures/Point";
+
+function ClickToCreatePoint() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const handleMouseClick = (event) => {
+      const value = { x: event.clientX, y: event.clientY };
+      const point = new Point(getNextName(), value);
+      dispatch(create(point));
+    };
+    window.addEventListener("click", handleMouseClick);
+    return () => {
+      window.removeEventListener("click", handleMouseClick);
+    };
+  });
+
+  return;
 }
 
 export default ClickToCreatePoint;

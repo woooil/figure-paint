@@ -17,6 +17,14 @@ class Figure {
   get component() {
     return <div key={this._id}>Figure {this.name}</div>;
   }
+
+  distanceFrom(point) {
+    return 0;
+  }
+
+  isInPadding(point) {
+    return false;
+  }
 }
 
 export default Figure;
