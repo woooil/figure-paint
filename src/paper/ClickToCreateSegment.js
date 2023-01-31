@@ -14,7 +14,7 @@ function ClickToCreateSegment() {
     var endpoints = [];
     const handleMouseClick = (event) => {
       const point = { x: event.clientX, y: event.clientY };
-      const element = clickJudge(figures, point, "point");
+      const element = clickJudge(figures, point, FIGTYPE.Point);
       if (
         element !== undefined &&
         (endpoints.length === 0 || element.id !== endpoints[0].id)

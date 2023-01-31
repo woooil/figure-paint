@@ -1,5 +1,7 @@
 import { useSelector } from "react-redux";
 
+import { FIGTYPE } from "./Figure";
+
 var nextName = "A";
 export const getNextName = () => {
   const result = nextName;
@@ -37,7 +39,11 @@ function Point(props) {
   };
 
   return (
-    <div style={paddingStyle} className="point figure-wrapper" {...props}>
+    <div
+      style={paddingStyle}
+      className={`${FIGTYPE.Point} figure-wrapper`}
+      {...props}
+    >
       <div style={pointStyle}></div>
     </div>
   );

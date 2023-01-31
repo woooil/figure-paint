@@ -5,8 +5,8 @@ import Point from "./Point";
 import Segment from "./Segment";
 
 export const FIGTYPE = {
-  Point: "Point",
-  Segment: "Segment",
+  Point: "point",
+  Segment: "segment",
 };
 Object.freeze(FIGTYPE);
 
@@ -21,9 +21,9 @@ export const newFigure = (type, def, other = {}) => {
 
 function Component({ type, ...props }) {
   switch (type) {
-    case "POINT":
+    case FIGTYPE.Point:
       return <Point {...props} />;
-    case "SEGMENT":
+    case FIGTYPE.Segment:
       return <Segment {...props} />;
     default:
       return <div>Error</div>;
