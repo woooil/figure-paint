@@ -1,30 +1,40 @@
 import { v4 as uuidv4 } from "uuid";
+import { useSelector } from "react-redux";
 
-class Figure {
-  constructor(name) {
-    this._id = uuidv4();
-    this._name = name;
-  }
+import Point from "./Point";
+import Segment from "./Segment";
 
-  get id() {
-    return this._id;
-  }
+export const FIGTYPE = {
+  Point: "Point",
+  Segment: "Segment",
+};
+Object.freeze(FIGTYPE);
 
-  get name() {
-    return this._name;
-  }
+export const newFigure = (type, def, other = {}) => {
+  return {
+    id: uuidv4(),
+    type: type,
+    def: def,
+    ...other,
+  };
+};
 
-  get component() {
-    return <div key={this._id}>Figure {this.name}</div>;
+function Component({ type, ...props }) {
+  switch (type) {
+    case "POINT":
+      return <Point {...props} />;
+    case "SEGMENT":
+      return <Segment {...props} />;
+    default:
+      return <div>Error</div>;
   }
+}
 
-  distanceFrom(point) {
-    return 0;
-  }
+function Figure({ id }) {
+  const figures = useSelector((state) => state.figures.value);
+  const figure = figures.find((f) => f.id === id);
 
-  isInPadding(point) {
-    return false;
-  }
+  return <Component id={id} type={figure.type} />;
 }
 
 export default Figure;

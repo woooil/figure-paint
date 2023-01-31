@@ -2,15 +2,20 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { create } from "../figures/figureSlice";
-import Point, { getNextName } from "../figures/Point";
+import { FIGTYPE, newFigure } from "../figures/Figure";
+import { getNextName } from "../figures/Point";
 
 function ClickToCreatePoint() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     const handleMouseClick = (event) => {
-      const value = { x: event.clientX, y: event.clientY };
-      const point = new Point(getNextName(), value);
+      const def = {
+        by: "ABSPOS",
+        x: event.clientX,
+        y: event.clientY,
+      };
+      const point = newFigure(FIGTYPE.Point, def, { name: getNextName() });
       dispatch(create(point));
     };
     window.addEventListener("click", handleMouseClick);

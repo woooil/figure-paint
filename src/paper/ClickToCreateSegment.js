@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { create } from "../figures/figureSlice";
 
-import Segment from "../figures/Segment";
+import { create } from "../figures/figureSlice";
+import { FIGTYPE, newFigure } from "../figures/Figure";
+
 import clickJudge from "./clickJudge";
 
 function ClickToCreateSegment() {
@@ -21,14 +22,12 @@ function ClickToCreateSegment() {
         endpoints.push(element);
       }
       if (endpoints.length === 2) {
-        const value = {
-          startPos: endpoints[0].position,
-          endPos: endpoints[1].position,
+        const def = {
+          by: "ENDPNTS",
+          fst: endpoints[0].id,
+          snd: endpoints[1].id,
         };
-        const segment = new Segment(
-          endpoints[0].name + endpoints[1].name,
-          value
-        );
+        const segment = newFigure(FIGTYPE.Segment, def);
         dispatch(create(segment));
         endpoints = [];
       }

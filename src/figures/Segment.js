@@ -1,80 +1,42 @@
-import Figure from "./Figure";
+import { useSelector } from "react-redux";
 
-class Segment extends Figure {
-  constructor(name, values) {
-    super(name);
-    this._values = values;
-    this._startPos = values.startPos;
-    this._endPos = values.endPos;
-  }
+function Segment(props) {
+  const figures = useSelector((state) => state.figures.value);
+  const segment = figures.find((f) => f.id === props.id);
+  const fst = figures.find((f) => f.id === segment.def.fst);
+  const snd = figures.find((f) => f.id === segment.def.snd);
 
-  get values() {
-    return this._values;
-  }
+  const segmentWidth = 2;
+  const paddingWidth = 4;
+  const len = Math.sqrt(
+    (fst.def.x - snd.def.x) ** 2 + (fst.def.y - snd.def.y) ** 2
+  );
+  const segmentStyle = {
+    backgroundColor: "black",
+    width: `${len}px`,
+    height: `${segmentWidth}px`,
+    position: "absolute",
+    top: paddingWidth - segmentWidth / 2,
+  };
+  const angle = Math.atan((snd.def.y - fst.def.y) / (snd.def.x - fst.def.x));
+  const pos = {
+    x: (fst.def.x + snd.def.x - len) / 2,
+    y: (fst.def.y + snd.def.y) / 2,
+  };
+  const paddingStyle = {
+    width: `${len}px`,
+    height: `${paddingWidth * 2}px`,
+    position: "absolute",
+    transform: `rotate(${(angle * 180) / Math.PI}deg)`,
+    left: pos.x,
+    top: pos.y - paddingWidth,
+  };
 
-  segmentWidth = 2;
-  paddingWidth = 4;
-  get segmentStyle() {
-    const len = Math.sqrt(
-      (this._endPos.x - this._startPos.x) ** 2 +
-        (this._endPos.y - this._startPos.y) ** 2
-    );
-    return {
-      backgroundColor: "black",
-      width: `${len}px`,
-      height: `${this.segmentWidth}px`,
-      position: "absolute",
-      top: this.paddingWidth - this.segmentWidth / 2,
-    };
-  }
-  get paddingStyle() {
-    const len = Math.sqrt(
-      (this._endPos.x - this._startPos.x) ** 2 +
-        (this._endPos.y - this._startPos.y) ** 2
-    );
-    const angle = Math.atan(
-      (this._endPos.y - this._startPos.y) / (this._endPos.x - this._startPos.x)
-    );
-    const pos = {
-      x: (this._startPos.x + this._endPos.x - len) / 2,
-      y: (this._startPos.y + this._endPos.y) / 2,
-    };
-    return {
-      width: `${len}px`,
-      height: `${this.paddingWidth * 2}px`,
-      position: "absolute",
-      transform: `rotate(${(angle * 180) / Math.PI}deg)`,
-      left: pos.x,
-      top: pos.y - this.paddingWidth,
-    };
-  }
-
-  get component() {
-    return (
-      <div
-        style={this.paddingStyle}
-        className="segment figure-wrapper"
-        id={this.id}
-        key={this.id}
-      >
-        <div style={this.segmentStyle}></div>
-      </div>
-    );
-  }
-
-  distanceFrom(point) {
-    const numerator =
-      (this._startPos.x - this._endPos.x) * (point.y - this._endPos.y) -
-      (point.x - this._endPos.x) * (this._startPos.y - this._endPos.y);
-    const denom =
-      (this._endPos.x - this._startPos.x) ** 2 +
-      (this._endPos.y - this._startPos.y) ** 2;
-    return Math.abs(numerator) / Math.sqrt(denom);
-  }
-
-  isInPadding(point) {
-    return this.distanceFrom(point) < this.paddingWidth + this.segmentWidth / 2;
-  }
+  return (
+    <div style={paddingStyle} className="segment figure-wrapper" {...props}>
+      <div style={segmentStyle}></div>
+    </div>
+  );
 }
 
 export default Segment;

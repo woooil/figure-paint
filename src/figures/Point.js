@@ -1,4 +1,4 @@
-import Figure from "./Figure";
+import { useSelector } from "react-redux";
 
 var nextName = "A";
 export const getNextName = () => {
@@ -13,68 +13,34 @@ export const getNextName = () => {
   return result;
 };
 
-class Point extends Figure {
-  constructor(name, values) {
-    super(name);
-    this._values = values;
-    this._x = values.x;
-    this._y = values.y;
-  }
+function Point(props) {
+  const figures = useSelector((state) => state.figures.value);
+  const point = figures.find((f) => f.id === props.id);
 
-  get values() {
-    return this._values;
-  }
-  get position() {
-    return { x: this._x, y: this._y };
-  }
-
-  pointSize = 6;
-  paddingSize = 4;
-  pointStyle = {
+  const pointSize = 6;
+  const paddingSize = 4;
+  const pointStyle = {
     backgroundColor: "black",
-    width: `${this.pointSize}px`,
-    height: `${this.pointSize}px`,
+    width: `${pointSize}px`,
+    height: `${pointSize}px`,
     borderRadius: "50%",
     position: "absolute",
-    left: this.paddingSize,
-    top: this.paddingSize,
+    left: paddingSize,
+    top: paddingSize,
   };
-  get paddingStyle() {
-    return {
-      width: `${this.pointSize + this.paddingSize * 2}px`,
-      height: `${this.pointSize + this.paddingSize * 2}px`,
-      position: "absolute",
-      left: this._x - this.pointSize / 2 - this.paddingSize,
-      top: this._y - this.pointSize / 2 - this.paddingSize,
-    };
-  }
+  const paddingStyle = {
+    width: `${pointSize + paddingSize * 2}px`,
+    height: `${pointSize + paddingSize * 2}px`,
+    position: "absolute",
+    left: point.def.x - pointSize / 2 - paddingSize,
+    top: point.def.y - pointSize / 2 - paddingSize,
+  };
 
-  get component() {
-    return (
-      <div
-        style={this.paddingStyle}
-        className="point figure-wrapper"
-        id={this.id}
-        key={this.id}
-      >
-        <div style={this.pointStyle}></div>
-      </div>
-    );
-  }
-
-  distanceFrom(point) {
-    const squared =
-      (point.x - this._x) * (point.x - this._x) +
-      (point.y - this._y) * (point.y - this._y);
-    return Math.sqrt(squared) - this.pointSize / 2;
-  }
-
-  isInPadding(point) {
-    const squared =
-      (point.x - this._x) * (point.x - this._x) +
-      (point.y - this._y) * (point.y - this._y);
-    return Math.sqrt(squared) < this.paddingSize;
-  }
+  return (
+    <div style={paddingStyle} className="point figure-wrapper" {...props}>
+      <div style={pointStyle}></div>
+    </div>
+  );
 }
 
 export default Point;
