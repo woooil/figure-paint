@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
-import { FIGTYPE } from "./Figure";
+
+import { FIG_TYPE } from "../Figure";
 
 function Segment(props) {
   const figures = useSelector((state) => state.figures.value);
@@ -36,7 +37,7 @@ function Segment(props) {
   return (
     <div
       style={paddingStyle}
-      className={`${FIGTYPE.Segment} figure-wrapper`}
+      className={`${FIG_TYPE.segment} figure-wrapper`}
       {...props}
     >
       <div style={segmentStyle}></div>

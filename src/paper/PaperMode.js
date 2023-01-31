@@ -1,40 +1,48 @@
 import { useState } from "react";
 
-import ClickToCreatePoint from "./ClickToCreatePoint";
-import ClickToCreateSegment from "./ClickToCreateSegment";
+import CreatePointByClick from "./CreatePointByClick";
+import CreatePointByRotPnt from "./CreatePointByRotPnt";
+import CreateSegByClkEndpnts from "./CreateSegByClkEndpnts";
 
 const MODE = {
-  ClickToCreatePoint: "Click to create new point",
-  ClickToCreateSegment: "Click to create new segement",
+  createPointByClick: "Click where to create new point",
+  createPointByRotPnt:
+    "Enter a rotating angle, and click a point to rotate and then a reference point",
+  createSegByClkEndpnts: "Click two endpoints to create new segement",
 };
 Object.freeze(MODE);
 
 function ModeComponent(mode) {
   switch (mode) {
-    case MODE.ClickToCreatePoint:
-      return <ClickToCreatePoint />;
-    case MODE.ClickToCreateSegment:
-      return <ClickToCreateSegment />;
+    case MODE.createPointByClick:
+      return <CreatePointByClick />;
+    case MODE.createPointByRotPnt:
+      return <CreatePointByRotPnt />;
+    case MODE.createSegByClkEndpnts:
+      return <CreateSegByClkEndpnts />;
     default:
       return <div></div>;
   }
 }
 
 function PaperMode() {
-  const [mode, setMode] = useState(MODE.ClickToCreatePoint);
+  const modes = Object.values(MODE);
+  const [mode, setMode] = useState(modes[0]);
 
-  const toggleMode = () => {
-    if (mode === MODE.ClickToCreatePoint) {
-      setMode(MODE.ClickToCreateSegment);
-    } else {
-      setMode(MODE.ClickToCreatePoint);
-    }
+  const handleSelect = (e) => {
+    setMode(e.target.value);
   };
 
   return (
     <div>
       <h2>Current Mode: {mode}</h2>
-      <button onClick={toggleMode}>Toggle mode</button>
+      <select onChange={handleSelect} value={mode}>
+        {modes.map((item) => (
+          <option value={item} key={item}>
+            {item}
+          </option>
+        ))}
+      </select>
       {ModeComponent(mode)}
     </div>
   );
