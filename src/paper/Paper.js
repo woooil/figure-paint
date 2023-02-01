@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import PaperMode from "./PaperMode";
-import Figure from "../figures/Figure";
+import Figure from "../Figure/Figure";
 
 function Paper() {
   const figures = useSelector((state) => state.figures.value);

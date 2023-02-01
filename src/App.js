@@ -1,4 +1,4 @@
-import Paper from "./paper/Paper";
+import Paper from "./Paper/Paper";
 
 function App() {
   return (
