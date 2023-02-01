@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-import { FIG_TYPE } from "../Figure";
+import FIG_TYPE from "../FIG_TYPE";
 import getPointPos from "./getPointPos";
 
 function Point(props) {

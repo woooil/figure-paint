@@ -1,23 +1,10 @@
-import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
+
+import FIG_TYPE from "./FIG_TYPE";
 
 import Point from "./Point/Point";
 import Segment from "./Segment/Segment";
-
-export const FIG_TYPE = {
-  point: "point",
-  segment: "segment",
-};
-Object.freeze(FIG_TYPE);
-
-export const newFigure = (type, def, other = {}) => {
-  return {
-    id: uuidv4(),
-    type: type,
-    def: def,
-    ...other,
-  };
-};
+import Label from "./Label/Label";
 
 function Component({ type, ...props }) {
   switch (type) {
@@ -25,6 +12,8 @@ function Component({ type, ...props }) {
       return <Point {...props} />;
     case FIG_TYPE.segment:
       return <Segment {...props} />;
+    case FIG_TYPE.label:
+      return <Label {...props} />;
     default:
       return <div>Error</div>;
   }

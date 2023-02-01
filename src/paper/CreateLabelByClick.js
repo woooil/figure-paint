@@ -1,36 +1,33 @@
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
 
 import { create } from "../figures/figureSlice";
 import FIG_TYPE from "../figures/FIG_TYPE";
 import newFigure from "../figures/newFigure";
-import SEGMENT_DEF from "../figures/Segment/SEGMENT_DEF";
+import LABEL_DEF from "../figures/Label/LABEL_DEF";
+
 import clickJudge from "./clickJudge";
 
-function CreateSegByClkEndpnts() {
+function CreateLabelByClick() {
   const figures = useSelector((state) => state.figures.value);
   const dispatch = useDispatch();
 
+  const [text, setText] = useState("");
+
   useEffect(() => {
-    var endpoints = [];
     const handleMouseClick = (event) => {
       const point = { x: event.clientX, y: event.clientY };
       const element = clickJudge(figures, point, FIG_TYPE.point);
-      if (
-        element !== undefined &&
-        (endpoints.length === 0 || element.id !== endpoints[0])
-      ) {
-        endpoints.push(element);
-      }
-      if (endpoints.length === 2) {
+      if (element !== undefined) {
         const def = {
-          by: SEGMENT_DEF.endpnts,
-          fst: endpoints[0],
-          snd: endpoints[1],
+          by: LABEL_DEF.relToFig,
+          text: text,
+          host: element,
+          x: 0,
+          y: -30,
         };
-        const segment = newFigure(FIG_TYPE.segment, def);
-        dispatch(create(segment));
-        endpoints = [];
+        const figure = newFigure(FIG_TYPE.label, def);
+        dispatch(create(figure));
       }
     };
     window.addEventListener("click", handleMouseClick);
@@ -38,6 +35,10 @@ function CreateSegByClkEndpnts() {
       window.removeEventListener("click", handleMouseClick);
     };
   });
+
+  return (
+    <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
+  );
 }
 
-export default CreateSegByClkEndpnts;
+export default CreateLabelByClick;

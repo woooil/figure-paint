@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { create } from "../figures/figureSlice";
-import { FIG_TYPE, newFigure } from "../figures/Figure";
-import { getNextName } from "../figures/Point/getNextName";
-import { POINT_DEF } from "../figures/Point/PointDef";
+import FIG_TYPE from "../figures/FIG_TYPE";
+import newFigure from "../figures/newFigure";
+import POINT_DEF from "../figures/Point/POINT_DEF";
 
 function CreatePointByClick() {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function CreatePointByClick() {
           x: event.clientX,
           y: event.clientY,
         };
-        const point = newFigure(FIG_TYPE.point, def, { name: getNextName() });
+        const point = newFigure(FIG_TYPE.point, def);
         dispatch(create(point));
       }
     };

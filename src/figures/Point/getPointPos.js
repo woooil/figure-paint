@@ -1,4 +1,4 @@
-import { POINT_DEF } from "./PointDef";
+import POINT_DEF from "./POINT_DEF";
 import rotatePos from "./rotatePos";
 
 function getPointPos(figures, id) {

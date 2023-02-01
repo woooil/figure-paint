@@ -6,6 +6,8 @@ import MovePointByClick from "./MovePointByClick";
 
 import CreateSegByClkEndpnts from "./CreateSegByClkEndpnts";
 
+import CreateLabelByClick from "./CreateLabelByClick";
+
 const MODE = {
   createPointByClick: "Click where to create new point",
   createPointByRotPnt:
@@ -13,6 +15,8 @@ const MODE = {
   movePointByClick: "Click a point to move and then click where to move",
 
   createSegByClkEndpnts: "Click two endpoints to create new segement",
+
+  CreateLabelByClick: "Enter a label text, and click a point to label",
 };
 Object.freeze(MODE);
 
@@ -27,6 +31,10 @@ function ModeComponent(mode) {
 
     case MODE.createSegByClkEndpnts:
       return <CreateSegByClkEndpnts />;
+
+    case MODE.CreateLabelByClick:
+      return <CreateLabelByClick />;
+
     default:
       return <div></div>;
   }
