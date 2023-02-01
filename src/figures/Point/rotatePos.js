@@ -1,6 +1,6 @@
 // reference: https://gist.github.com/LukeChannings/5b3e0c6fd35e4ad6b47c
 
-function rotPos(refPos, counterPos, angle) {
+function rotatePos(refPos, counterPos, angle) {
   const angleAsRad = (angle * Math.PI) / 180;
   const pos = {
     x:
@@ -15,4 +15,4 @@ function rotPos(refPos, counterPos, angle) {
   return pos;
 }
 
-export default rotPos;
+export default rotatePos;

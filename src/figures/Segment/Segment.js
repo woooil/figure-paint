@@ -1,17 +1,18 @@
 import { useSelector } from "react-redux";
 
 import { FIG_TYPE } from "../Figure";
+import getPointPos from "../Point/getPointPos";
 
 function Segment(props) {
   const figures = useSelector((state) => state.figures.value);
   const segment = figures.find((f) => f.id === props.id);
-  const fst = figures.find((f) => f.id === segment.def.fst);
-  const snd = figures.find((f) => f.id === segment.def.snd);
+  const fstPos = getPointPos(figures, segment.def.fst);
+  const sndPos = getPointPos(figures, segment.def.snd);
 
   const segmentWidth = 2;
   const paddingWidth = 4;
   const len = Math.sqrt(
-    (fst.def.x - snd.def.x) ** 2 + (fst.def.y - snd.def.y) ** 2
+    (fstPos.x - sndPos.x) ** 2 + (fstPos.y - sndPos.y) ** 2
   );
   const segmentStyle = {
     backgroundColor: "black",
@@ -20,10 +21,10 @@ function Segment(props) {
     position: "absolute",
     top: paddingWidth - segmentWidth / 2,
   };
-  const angle = Math.atan((snd.def.y - fst.def.y) / (snd.def.x - fst.def.x));
+  const angle = Math.atan((sndPos.y - fstPos.y) / (sndPos.x - fstPos.x));
   const pos = {
-    x: (fst.def.x + snd.def.x - len) / 2,
-    y: (fst.def.y + snd.def.y) / 2,
+    x: (fstPos.x + sndPos.x - len) / 2,
+    y: (fstPos.y + sndPos.y) / 2,
   };
   const paddingStyle = {
     width: `${len}px`,
