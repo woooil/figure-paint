@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import PointMode, { POINT_MODE } from "./Point/PointMode";
 import SegmentMode, { SEGMENT_MODE } from "./Segment/SegmentMode";
 import LabelMode, { LABEL_MODE } from "./Label/LabelMode";
+import LineMode, { LINE_MODE } from "./Line/LineMode";
 
 const MODE = {
   point: "point",
   segment: "segment",
   label: "label",
+  line: "line",
 };
 Object.freeze(MODE);
 
@@ -19,6 +21,8 @@ function ModeComponent(mode, subMode) {
       return <SegmentMode mode={subMode} />;
     case MODE.label:
       return <LabelMode mode={subMode} />;
+    case MODE.line:
+      return <LineMode mode={subMode} />;
     default:
       return <div></div>;
   }
@@ -32,6 +36,8 @@ function getSubModesObject(mode) {
       return SEGMENT_MODE;
     case MODE.label:
       return LABEL_MODE;
+    case MODE.line:
+      return LINE_MODE;
     default:
       return {};
   }
