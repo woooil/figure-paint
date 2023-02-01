@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import CreatePointByClick from "./CreatePointByClick";
 import CreatePointByRotPnt from "./CreatePointByRotPnt";
 import MovePointByClick from "./MovePointByClick";
@@ -11,8 +9,9 @@ const MODE = {
   movePointByClick: "Click a point to move and then click where to move",
 };
 Object.freeze(MODE);
+export { MODE as POINT_MODE };
 
-function ModeComponent(mode) {
+function PointMode({ mode }) {
   switch (mode) {
     case MODE.createPointByClick:
       return <CreatePointByClick />;
@@ -23,28 +22,6 @@ function ModeComponent(mode) {
     default:
       return <div></div>;
   }
-}
-
-function PointMode() {
-  const modes = Object.values(MODE);
-  const [mode, setMode] = useState(modes[0]);
-
-  const handleSelect = (e) => {
-    setMode(e.target.value);
-  };
-
-  return (
-    <div>
-      <select onChange={handleSelect} value={mode}>
-        {modes.map((item) => (
-          <option value={item} key={item}>
-            {item}
-          </option>
-        ))}
-      </select>
-      {ModeComponent(mode)}
-    </div>
-  );
 }
 
 export default PointMode;
