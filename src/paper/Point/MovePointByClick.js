@@ -21,12 +21,13 @@ function MovePointByClick() {
         if (
           document
             .elementsFromPoint(event.clientX, event.clientY)
-            .find((e) => e.classList.contains("canvas")) !== undefined
+            .find((e) => e.id === "canvas") !== undefined
         ) {
+          const canvas = document.getElementById("canvas");
           const def = {
             by: POINT_DEF.absPos,
-            x: event.clientX,
-            y: event.clientY,
+            x: event.clientX - canvas.offsetLeft,
+            y: event.clientY - canvas.offsetTop,
           };
           const oldPoint = figures.find((f) => f.id === id);
           const newPoint = { ...oldPoint, def: def };

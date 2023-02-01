@@ -14,12 +14,13 @@ function CreatePointByClick() {
       if (
         document
           .elementsFromPoint(event.clientX, event.clientY)
-          .find((e) => e.classList.contains("canvas")) !== undefined
+          .find((e) => e.id === "canvas") !== undefined
       ) {
+        const canvas = document.getElementById("canvas");
         const def = {
           by: POINT_DEF.absPos,
-          x: event.clientX,
-          y: event.clientY,
+          x: event.clientX - canvas.offsetLeft,
+          y: event.clientY - canvas.offsetTop,
         };
         const point = newFigure(FIG_TYPE.point, def);
         dispatch(create(point));

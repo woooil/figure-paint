@@ -24,22 +24,21 @@ function ModeComponent(mode, subMode) {
   }
 }
 
-function getSubModes(mode) {
-  var object;
+function getSubModesObject(mode) {
   switch (mode) {
     case MODE.point:
-      object = POINT_MODE;
-      break;
+      return POINT_MODE;
     case MODE.segment:
-      object = SEGMENT_MODE;
-      break;
+      return SEGMENT_MODE;
     case MODE.label:
-      object = LABEL_MODE;
-      break;
+      return LABEL_MODE;
     default:
-      object = [];
+      return {};
   }
-  return Object.values(object);
+}
+
+function getSubModes(mode) {
+  return Object.values(getSubModesObject(mode));
 }
 
 function PaperMode() {

@@ -6,12 +6,17 @@ function Paper() {
   const figures = useSelector((state) => state.figures.value);
 
   const canvasStyle = {
-    height: "100vh",
+    backgroundColor: "gray",
+    width: "900px",
+    height: "600px",
+    overflow: "hidden",
+    margin: "10px",
+    position: "absolute",
   };
   return (
     <div>
       <PaperMode />
-      <div className="canvas" style={canvasStyle}>
+      <div id="canvas" style={canvasStyle}>
         {figures.map((figure) => (
           <Figure id={figure.id} key={figure.id} />
         ))}
