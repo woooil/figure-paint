@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { update } from "../figures/figureSlice";
-import FIG_TYPE from "../figures/FIG_TYPE";
-import POINT_DEF from "../figures/Point/POINT_DEF";
-import clickJudge from "./clickJudge";
+import { update } from "../../figures/figureSlice";
+import FIG_TYPE from "../../figures/FIG_TYPE";
+import POINT_DEF from "../../figures/Point/POINT_DEF";
+import clickJudge from "../clickJudge";
 
 function MovePointByClick() {
   const figures = useSelector((state) => state.figures.value);

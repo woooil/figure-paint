@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { create } from "../figures/figureSlice";
-import FIG_TYPE from "../figures/FIG_TYPE";
-import newFigure from "../figures/newFigure";
-import POINT_DEF from "../figures/Point/POINT_DEF";
+import { create } from "../../figures/figureSlice";
+import FIG_TYPE from "../../figures/FIG_TYPE";
+import newFigure from "../../figures/newFigure";
+import POINT_DEF from "../../figures/Point/POINT_DEF";
 
 function CreatePointByClick() {
   const dispatch = useDispatch();

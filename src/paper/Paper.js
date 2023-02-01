@@ -8,7 +8,6 @@ function Paper() {
   const canvasStyle = {
     height: "100vh",
   };
-
   return (
     <div>
       <PaperMode />

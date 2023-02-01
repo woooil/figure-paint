@@ -11,12 +11,8 @@ function getPointPos(figures, id) {
       pos.y = point.def.y;
       break;
     case POINT_DEF.rotPnt:
-      const refId = point.def.refPoint;
-      const counterId = point.def.counterPoint;
-      const refPoint = figures.find((f) => f.id === refId);
-      const counterPoint = figures.find((f) => f.id === counterId);
-      const refPos = { x: refPoint.def.x, y: refPoint.def.y };
-      const counterPos = { x: counterPoint.def.x, y: counterPoint.def.y };
+      const refPos = getPointPos(figures, point.def.refPoint);
+      const counterPos = getPointPos(figures, point.def.counterPoint);
       pos = rotatePos(refPos, counterPos, point.def.angle);
       break;
     default:

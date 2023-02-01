@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { create } from "../figures/figureSlice";
-import FIG_TYPE from "../figures/FIG_TYPE";
-import newFigure from "../figures/newFigure";
-import POINT_DEF from "../figures/Point/POINT_DEF";
+import { create } from "../../figures/figureSlice";
+import FIG_TYPE from "../../figures/FIG_TYPE";
+import newFigure from "../../figures/newFigure";
+import POINT_DEF from "../../figures/Point/POINT_DEF";
 
-import clickJudge from "./clickJudge";
+import clickJudge from "../clickJudge";
 
 function CreatePointByRotPnt() {
   const figures = useSelector((state) => state.figures.value);

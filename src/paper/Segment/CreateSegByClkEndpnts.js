@@ -1,11 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
-import { create } from "../figures/figureSlice";
-import FIG_TYPE from "../figures/FIG_TYPE";
-import newFigure from "../figures/newFigure";
-import SEGMENT_DEF from "../figures/Segment/SEGMENT_DEF";
-import clickJudge from "./clickJudge";
+import { create } from "../../figures/figureSlice";
+import FIG_TYPE from "../../figures/FIG_TYPE";
+import newFigure from "../../figures/newFigure";
+import SEGMENT_DEF from "../../figures/Segment/SEGMENT_DEF";
+import clickJudge from "../clickJudge";
 
 function CreateSegByClkEndpnts() {
   const figures = useSelector((state) => state.figures.value);
