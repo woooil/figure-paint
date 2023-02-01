@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { create } from "../figures/figureSlice";
 import { FIG_TYPE, newFigure } from "../figures/Figure";
 import { getNextName } from "../figures/Point/getNextName";
-import { POINT_DEF_BY } from "../figures/Point/PointDefBy";
+import { POINT_DEF } from "../figures/Point/PointDef";
 
 import clickJudge from "./clickJudge";
 
@@ -25,7 +25,7 @@ function CreatePointByRotPnt() {
         refPoint = clickJudge(figures, point, FIG_TYPE.point);
         if (refPoint !== undefined) {
           const def = {
-            by: POINT_DEF_BY.rotPnt,
+            by: POINT_DEF.rotPnt,
             counterPoint: counterPoint,
             refPoint: refPoint,
             angle: angle,

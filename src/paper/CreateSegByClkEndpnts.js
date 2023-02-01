@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { create } from "../figures/figureSlice";
 import { FIG_TYPE, newFigure } from "../figures/Figure";
-import { SEGMENT_DEF_BY } from "../figures/Segment/SegmentDefBy";
+import { SEGMENT_DEF } from "../figures/Segment/SegmentDef";
 import clickJudge from "./clickJudge";
 
 function CreateSegByClkEndpnts() {
@@ -23,7 +23,7 @@ function CreateSegByClkEndpnts() {
       }
       if (endpoints.length === 2) {
         const def = {
-          by: SEGMENT_DEF_BY.endpnts,
+          by: SEGMENT_DEF.endpnts,
           fst: endpoints[0],
           snd: endpoints[1],
         };

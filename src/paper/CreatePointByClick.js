@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { create } from "../figures/figureSlice";
 import { FIG_TYPE, newFigure } from "../figures/Figure";
 import { getNextName } from "../figures/Point/getNextName";
-import { POINT_DEF_BY } from "../figures/Point/PointDefBy";
+import { POINT_DEF } from "../figures/Point/PointDef";
 
 function CreatePointByClick() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function CreatePointByClick() {
           .find((e) => e.classList.contains("canvas")) !== undefined
       ) {
         const def = {
-          by: POINT_DEF_BY.absPos,
+          by: POINT_DEF.absPos,
           x: event.clientX,
           y: event.clientY,
         };
