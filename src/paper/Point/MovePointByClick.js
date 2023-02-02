@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { update } from "../../Figure/figureSlice";
+import { update, liftDep } from "../../Figure/figureSlice";
 import FIG_TYPE from "../../Figure/FIG_TYPE";
 import POINT_DEF from "../../Figure/Point/POINT_DEF";
 import clickJudge from "../clickJudge";
@@ -15,8 +15,7 @@ function MovePointByClick() {
     const handleMouseClick = (event) => {
       if (id === undefined) {
         const clicked = { x: event.clientX, y: event.clientY };
-        const element = clickJudge(figures, clicked, FIG_TYPE.point);
-        id = element;
+        id = clickJudge(figures, clicked, FIG_TYPE.point);
       } else {
         if (
           document
@@ -29,13 +28,17 @@ function MovePointByClick() {
             x: event.clientX - canvas.offsetLeft,
             y: event.clientY - canvas.offsetTop,
           };
-          const oldPoint = figures.find((f) => f.id === id);
-          const newPoint = { ...oldPoint, def: def };
           const payload = {
             id: id,
-            with: newPoint,
+            with: {
+              def: def,
+            },
           };
           dispatch(update(payload));
+          const determinants = figures.find((f) => f.id === id).determinants;
+          determinants.forEach((det) => {
+            dispatch(liftDep({ determinant: det, dependant: id }));
+          });
           id = undefined;
         }
       }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { create } from "../../Figure/figureSlice";
+import { create, setDep } from "../../Figure/figureSlice";
 import FIG_TYPE from "../../Figure/FIG_TYPE";
 import newFigure from "../../Figure/newFigure";
 import LABEL_DEF from "../../Figure/Label/LABEL_DEF";
@@ -28,6 +28,7 @@ function CreateLabelByClick() {
         };
         const figure = newFigure(FIG_TYPE.label, def);
         dispatch(create(figure));
+        dispatch(setDep({ determinant: element, dependant: figure.id }));
       }
     };
     window.addEventListener("click", handleMouseClick);

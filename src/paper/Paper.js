@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import PaperMode from "./PaperMode";
 import Figure from "../Figure/Figure";
@@ -13,6 +14,12 @@ function Paper() {
     margin: "10px",
     position: "absolute",
   };
+
+  useEffect(() => {
+    console.log("figure updated:");
+    console.log(figures);
+  }, [figures]);
+
   return (
     <div>
       <PaperMode />

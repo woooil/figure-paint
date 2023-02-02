@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
-import { create } from "../../Figure/figureSlice";
+import { create, setDep } from "../../Figure/figureSlice";
 import FIG_TYPE from "../../Figure/FIG_TYPE";
 import newFigure from "../../Figure/newFigure";
 import LINE_DEF from "../../Figure/Line/LINE_DEF";
@@ -30,6 +30,8 @@ function CreateLineByClkTwoPnts() {
         };
         const line = newFigure(FIG_TYPE.line, def);
         dispatch(create(line));
+        dispatch(setDep({ determinant: points[0], dependant: line.id }));
+        dispatch(setDep({ determinant: points[1], dependant: line.id }));
         points = [];
       }
     };
