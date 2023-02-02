@@ -1,12 +1,15 @@
+/**
+ * Definitions of labels.
+ *
+ * @name relToFig
+ * Sets an offset to the host point.
+ * @property {string} text  - text to display.
+ * @property {id}     host  - the id of the host point.
+ * @property {number} x     - the x value of offset.
+ * @property {number} y     - the y value of offset.
+ *
+ */
 const LABEL_DEF = {
-  // relative position determined by the host point and a given offset
-  // def: {
-  //   by: LABEL_DEF,
-  //   text: (text to display),
-  //   host: (id of host point),
-  //   x: (x value of offset),
-  //   y: (y value of offset),
-  // }
   relToFig: "relToFig",
 };
 Object.freeze(LABEL_DEF);

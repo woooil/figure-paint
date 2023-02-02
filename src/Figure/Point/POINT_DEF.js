@@ -1,19 +1,20 @@
+/**
+ * Definitions of points.
+ *
+ * @name absPos
+ * Sets the point's absolute position.
+ * @property {number} x - the x value of the absolute position.
+ * @property {number} y - the y value of the absolute position.
+ *
+ * @name rotPnt
+ * Rotate an existing point with respect to reference point by the given angle.
+ * @property {id}       counterPoint  - the id of the point to be rotated.
+ * @property {id}       refPoint      - the id of the point to be referenced.
+ * @property {nunmber}  angle         - the angle to rotate in degree.
+ *
+ */
 const POINT_DEF = {
-  // absolute position
-  // def: {
-  //   by: POINT_DEF.absPos,
-  //   x: (x value of position of point),
-  //   y: (y value of position of point),
-  // }
   absPos: "absPos",
-
-  // relative position determined by rotating another point with respect to reference point by a given angle
-  // def: {
-  //   by: POINT_DEF.rotPos,
-  //   counterPoint: (id of point rotated),
-  //   refPoint: (id of point referenced),
-  //   angle: (angle to rotate in degree),
-  // }
   rotPnt: "rotPnt",
 };
 Object.freeze(POINT_DEF);

@@ -1,10 +1,13 @@
+/**
+ * Definitions of segments.
+ *
+ * @name endpnts
+ * Sets two endpoints of the segment.
+ * @property {id} fst - the id of one of the endpoints.
+ * @property {id} snd - the id of another endpoint.
+ *
+ */
 const SEGMENT_DEF = {
-  // defined by two endpoints
-  // def: {
-  //   by: SEGMENT_DEF.endpnts,
-  //   fst: (id of one of endpoints),
-  //   snd: (id of another enpoint),
-  // }
   endpnts: "endpnts",
 };
 Object.freeze(SEGMENT_DEF);

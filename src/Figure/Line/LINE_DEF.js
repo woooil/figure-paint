@@ -1,10 +1,13 @@
+/**
+ * Definitions of lines.
+ *
+ * @name twoPnts
+ * Sets two points which the line passes through.
+ * @property {id} fst - the id of one of the points.
+ * @property {id} snd - the id of another point.
+ *
+ */
 const LINE_DEF = {
-  // defined by two points which the line passes through
-  // def: {
-  //   by: LINE_DEF.twoPnts
-  //   fst: (id of one of points),
-  //   snd: (id of another point),
-  // }
   twoPnts: "twoPnts",
 };
 Object.freeze(LINE_DEF);

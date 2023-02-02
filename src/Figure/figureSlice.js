@@ -6,28 +6,56 @@ const initialState = {
   value: [],
 };
 
+/**
+ * Slice for figure.
+ *
+ * Actions available:
+ *
+ * @name create
+ * Creates a new figure with the given data.
+ * @param {object}    action.payload              - The figure usually created by newFigure.
+ * @param {id}        action.payload.id           - The figure's id.
+ * @param {FIG_TYPE}  action.payload.type         - The figure's type.
+ * @param {object}    action.payload.def          - The figure's definition.
+ * @param {[id]}      action.payload.determinants - The figure's determinants.
+ * @param {[id]}      action.payload.dependants   - The figure's dependants.
+ *
+ * @name update
+ * Updates some properties of an existing figure with the given data.
+ * @param {object}  action.payload      - The figure's id and the data to update with.
+ * @param {id}      action.payload.id   - The id of the figure to update.
+ * @param {object}  action.payload.with - The data to update the figure with. e.g. { def: { ... } }
+ *
+ * @name remove
+ * Removes an existing figure.
+ * @param {id}  action.payload  - The id of the figure to remove
+ *
+ * @name setDep
+ * Sets up a new dependency between two existing figures.
+ * @param {object}  action.payload              - The ids of the determinant and the dependant.
+ * @param {id}      action.payload.determinant  - The determinant's id.
+ * @param {id}      action.payload.dependant    - The dependant's id.
+ *
+ * @name liftDep
+ * Lifts an existing dependency.
+ * @param {object}  action.payload              - The ids of the determinant and the dependant.
+ * @param {id}      action.payload.determinant  - The determinant's id.
+ * @param {id}      action.payload.dependant    - The dependant's id.
+ *
+ */
 export const figureSlice = createSlice({
   name: "figures",
   initialState,
   reducers: {
-    // create a new figure
-    // action.payload: newFigure(type, def, other)
     create: (state, action) => {
       state.value.push(action.payload);
     },
 
-    // update an existing figure
-    // action.payload: {
-    //   id: id,
-    //   with: { field: value, ... }
-    // }
     update: (state, action) => {
       const index = state.value.findIndex((f) => f.id === action.payload.id);
       state.value[index] = { ...state.value[index], ...action.payload.with };
     },
 
-    // remove an existing figure
-    // action.payload: id
     remove: (state, action) => {
       const removeHelper = (value, id) => {
         var newValue = [...value];
@@ -57,11 +85,6 @@ export const figureSlice = createSlice({
       state.value = removeHelper(current(state.value), action.payload);
     },
 
-    // set a new dependency between two existing figures
-    // action.payload: {
-    //   determinant: id,
-    //   dependant: id,
-    // }
     setDep: (state, action) => {
       const detIndex = state.value.findIndex(
         (f) => f.id === action.payload.determinant
@@ -73,11 +96,6 @@ export const figureSlice = createSlice({
       state.value[depIndex].determinants.push(action.payload.determinant);
     },
 
-    // lift an existing dependency
-    // action.payload: {
-    //   determinant: id,
-    //   dependant: id,
-    // }
     liftDep: (state, action) => {
       const detIndex = state.value.findIndex(
         (f) => f.id === action.payload.determinant
