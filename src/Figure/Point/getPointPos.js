@@ -3,7 +3,6 @@ import rotatePos from "./rotatePos";
 
 function getPointPos(figures, id) {
   const point = figures.find((f) => f.id === id);
-
   var pos = { x: 0, y: 0 };
   switch (point.def.by) {
     case POINT_DEF.absPos:

@@ -17,8 +17,7 @@ function CreatePointByRotPnt() {
   useEffect(() => {
     var points = [];
     const handleMouseClick = (event) => {
-      const point = { x: event.clientX, y: event.clientY };
-      const id = clickJudge(figures, point, FIG_TYPE.point);
+      const id = clickJudge(figures, event, FIG_TYPE.point);
       if (id !== undefined) {
         points.push(id);
       }

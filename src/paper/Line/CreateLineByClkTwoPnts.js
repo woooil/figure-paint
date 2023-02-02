@@ -14,8 +14,7 @@ function CreateLineByClkTwoPnts() {
   useEffect(() => {
     var points = [];
     const handleMouseClick = (event) => {
-      const point = { x: event.clientX, y: event.clientY };
-      const element = clickJudge(figures, point, FIG_TYPE.point);
+      const element = clickJudge(figures, event, FIG_TYPE.point);
       if (
         element !== undefined &&
         (points.length === 0 || element.id !== points[0])

@@ -16,6 +16,9 @@ const type = (name, component, extension) => {
   };
 };
 
+/**
+ * @typedef {Object} FigType
+ */
 const FIG_TYPE = {
   point: type("point", Point, () => {
     return { name: getNextName() };

@@ -1,5 +1,5 @@
-function clickJudge(figures, point, type = undefined) {
-  const elements = document.elementsFromPoint(point.x, point.y);
+function clickJudge(figures, event, type = undefined) {
+  const elements = document.elementsFromPoint(event.clientX, event.clientY);
   const paddings = elements.filter(
     (e) =>
       e.classList.contains("figure-wrapper") &&

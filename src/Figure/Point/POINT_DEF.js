@@ -8,8 +8,8 @@
  *
  * @name rotPnt
  * Rotate an existing point with respect to reference point by the given angle.
- * @property {id}       counterPoint  - the id of the point to be rotated.
- * @property {id}       refPoint      - the id of the point to be referenced.
+ * @property {ID}       counterPoint  - the id of the point to be rotated.
+ * @property {ID}       refPoint      - the id of the point to be referenced.
  * @property {nunmber}  angle         - the angle to rotate in degree.
  *
  */

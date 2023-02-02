@@ -3,8 +3,8 @@
  *
  * @name endpnts
  * Sets two endpoints of the segment.
- * @property {id} fst - the id of one of the endpoints.
- * @property {id} snd - the id of another endpoint.
+ * @property {ID} fst - the id of one of the endpoints.
+ * @property {ID} snd - the id of another endpoint.
  *
  */
 const SEGMENT_DEF = {

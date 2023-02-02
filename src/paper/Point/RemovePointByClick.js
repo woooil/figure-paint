@@ -11,8 +11,7 @@ function RemovePointByClick() {
 
   useEffect(() => {
     const handleMouseClick = (event) => {
-      const clicked = { x: event.clientX, y: event.clientY };
-      const id = clickJudge(figures, clicked, FIG_TYPE.point);
+      const id = clickJudge(figures, event, FIG_TYPE.point);
       if (id !== undefined) {
         dispatch(remove(id));
       }

@@ -14,8 +14,7 @@ function CreateLabelByClick() {
 
   useEffect(() => {
     const handleMouseClick = (event) => {
-      const point = { x: event.clientX, y: event.clientY };
-      const element = clickJudge(figures, point, FIG_TYPE.point);
+      const element = clickJudge(figures, event, FIG_TYPE.point);
       if (element !== undefined) {
         const def = {
           by: LABEL_DEF.relToFig,

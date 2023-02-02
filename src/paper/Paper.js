@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import PaperMode from "./PaperMode";
+import CANVAS_OPT from "./CANVAS_OPT";
 import Figure from "../Figure/Figure";
 
 function Paper() {
@@ -8,8 +9,8 @@ function Paper() {
 
   const canvasStyle = {
     backgroundColor: "gray",
-    width: "900px",
-    height: "600px",
+    width: `${CANVAS_OPT.width}px`,
+    height: `${CANVAS_OPT.height}.px`,
     overflow: "hidden",
     margin: "10px",
     position: "absolute",
@@ -23,7 +24,7 @@ function Paper() {
   return (
     <div>
       <PaperMode />
-      <div id="canvas" style={canvasStyle}>
+      <div id={CANVAS_OPT.id} style={canvasStyle}>
         {figures.map((figure) => (
           <Figure id={figure.id} key={figure.id} />
         ))}
