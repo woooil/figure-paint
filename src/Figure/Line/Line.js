@@ -1,30 +1,30 @@
 import { useSelector } from "react-redux";
 
-import FIG_TYPE from "../FIG_TYPE";
+import figureComponent from "../figureComponent";
 import getPointPos from "../Point/getPointPos";
+import LINE_STYLE from "./LINE_STYLE";
 
-function Line(props) {
+function Line({ id }) {
   const figures = useSelector((state) => state.figures.value);
-  const line = figures.find((f) => f.id === props.id);
+  const line = figures.find((f) => f.id === id);
   const fstPos = getPointPos(figures, line.def.fst);
   const sndPos = getPointPos(figures, line.def.snd);
 
-  const lineWidth = 2;
   const paddingWidth = 4;
   const len = 2500;
-  const lineStyle = {
-    backgroundColor: "black",
+  const figureStyle = {
+    backgroundColor: LINE_STYLE.backgroundColor,
     width: `${len}px`,
-    height: `${lineWidth}px`,
+    height: `${LINE_STYLE.lineWidth}px`,
     position: "absolute",
-    top: paddingWidth - lineWidth / 2,
+    top: paddingWidth - LINE_STYLE.lineWidth / 2,
   };
   const angle = Math.atan((sndPos.y - fstPos.y) / (sndPos.x - fstPos.x));
   const pos = {
     x: (fstPos.x + sndPos.x - len) / 2,
     y: (fstPos.y + sndPos.y) / 2,
   };
-  const paddingStyle = {
+  const wrapperStyle = {
     width: `${len}px`,
     height: `${paddingWidth * 2}px`,
     position: "absolute",
@@ -33,15 +33,7 @@ function Line(props) {
     top: pos.y - paddingWidth,
   };
 
-  return (
-    <div
-      style={paddingStyle}
-      className={`${FIG_TYPE.line} figure-wrapper`}
-      {...props}
-    >
-      <div style={lineStyle}></div>
-    </div>
-  );
+  return figureComponent(wrapperStyle, figureStyle);
 }
 
 export default Line;

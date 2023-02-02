@@ -1,24 +1,22 @@
-import { useRef, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import FIG_TYPE from "../FIG_TYPE";
+import figureComponent from "../figureComponent";
 import getPointPos from "../Point/getPointPos";
+import getTextDim from "./getTextDim";
 
-function Label(props) {
-  const target = useRef();
-  const [dim, setDim] = useState({ width: 0, height: 0 });
-
+function Label({ id }) {
   const figures = useSelector((state) => state.figures.value);
-  const label = figures.find((f) => f.id === props.id);
+  const label = figures.find((f) => f.id === id);
   const hostPos = getPointPos(figures, label.def.host);
+  const dim = getTextDim(label.def.text, "");
 
   const paddingSize = 4;
-  const labelStyle = {
+  const figureStyle = {
     position: "absolute",
     left: paddingSize,
     top: paddingSize,
   };
-  const paddingStyle = {
+  const wrapperStyle = {
     position: "absolute",
     width: dim.width + paddingSize * 2,
     height: dim.height + paddingSize * 2,
@@ -26,24 +24,7 @@ function Label(props) {
     top: hostPos.y + label.def.y - paddingSize,
   };
 
-  useLayoutEffect(() => {
-    setDim({
-      width: target.current.offsetWidth,
-      height: target.current.offsetHeight,
-    });
-  }, []);
-
-  return (
-    <div
-      style={paddingStyle}
-      className={`${FIG_TYPE.label} figure-wrapper`}
-      {...props}
-    >
-      <div ref={target} style={labelStyle}>
-        {label.def.text}
-      </div>
-    </div>
-  );
+  return figureComponent(wrapperStyle, figureStyle, label.def.text);
 }
 
 export default Label;
