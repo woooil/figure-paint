@@ -1,5 +1,5 @@
 var nextName = "A";
-export const getNextName = () => {
+const getNextName = () => {
   const result = nextName;
   if (nextName.at(-1) !== "Z") {
     nextName =
@@ -10,3 +10,5 @@ export const getNextName = () => {
   }
   return result;
 };
+
+export default getNextName;

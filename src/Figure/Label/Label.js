@@ -7,8 +7,9 @@ import getTextDim from "./getTextDim";
 function Label({ id }) {
   const figures = useSelector((state) => state.figures.value);
   const label = figures.find((f) => f.id === id);
+  const name = figures.find((f) => f.id === label.def.host).name;
   const hostPos = getPointPos(figures, label.def.host);
-  const dim = getTextDim(label.def.text, "");
+  const dim = getTextDim(name, "");
 
   const paddingSize = 4;
   const figureStyle = {
@@ -22,7 +23,7 @@ function Label({ id }) {
     top: hostPos.y + label.def.y - paddingSize,
   };
 
-  return figureComponent(wrapperStyle, figureStyle, label.def.text);
+  return figureComponent(wrapperStyle, figureStyle, name);
 }
 
 export default Label;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { create, setDep } from "../../Figure/figureSlice";
@@ -12,8 +12,6 @@ function CreateLabelByClick() {
   const figures = useSelector((state) => state.figures.value);
   const dispatch = useDispatch();
 
-  const [text, setText] = useState("");
-
   useEffect(() => {
     const handleMouseClick = (event) => {
       const point = { x: event.clientX, y: event.clientY };
@@ -21,7 +19,6 @@ function CreateLabelByClick() {
       if (element !== undefined) {
         const def = {
           by: LABEL_DEF.relToFig,
-          text: text,
           host: element,
           x: 0,
           y: -30,
@@ -37,9 +34,7 @@ function CreateLabelByClick() {
     };
   });
 
-  return (
-    <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
-  );
+  return;
 }
 
 export default CreateLabelByClick;
