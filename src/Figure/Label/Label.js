@@ -12,12 +12,10 @@ function Label({ id }) {
 
   const paddingSize = 4;
   const figureStyle = {
-    position: "absolute",
     left: paddingSize,
     top: paddingSize,
   };
   const wrapperStyle = {
-    position: "absolute",
     width: dim.width + paddingSize * 2,
     height: dim.height + paddingSize * 2,
     left: hostPos.x + label.def.x - dim.width / 2 - paddingSize,

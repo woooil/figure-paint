@@ -7,7 +7,7 @@ function getTextDim(text, style) {
   const canvas = document.getElementById("canvas");
 
   canvas.appendChild(element);
-  const dim = { width: element.clientWidth, height: element.clientWidth };
+  const dim = { width: element.clientWidth, height: element.clientHeight };
   canvas.removeChild(element);
 
   return dim;

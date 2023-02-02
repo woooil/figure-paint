@@ -18,7 +18,6 @@ function Segment({ id }) {
     backgroundColor: LINE_STYLE.backgroundColor,
     width: `${len}px`,
     height: `${LINE_STYLE.lineWidth}px`,
-    position: "absolute",
     top: paddingWidth - LINE_STYLE.lineWidth / 2,
   };
   const angle = Math.atan((sndPos.y - fstPos.y) / (sndPos.x - fstPos.x));
@@ -29,7 +28,6 @@ function Segment({ id }) {
   const wrapperStyle = {
     width: `${len}px`,
     height: `${paddingWidth * 2}px`,
-    position: "absolute",
     transform: `rotate(${(angle * 180) / Math.PI}deg)`,
     left: pos.x,
     top: pos.y - paddingWidth,
