@@ -1,30 +1,29 @@
-import { useSelector } from "react-redux";
+import { TYPE } from "../Figure";
+import Figure from "../Figure";
+import getNextName from "./getNextName";
 
-import figureComponent from "../figureComponent";
-import getPointPos from "./getPointPos";
+const BY = {
+  AbsCoord: "AbsCoord",
+  RotPnt: "RotPnt",
+};
+Object.freeze(BY);
 
-function Point({ id }) {
-  const figures = useSelector((state) => state.figures.value);
-  const pos = getPointPos(figures, id);
+class Point extends Figure {
+  constructor(by, props) {
+    super(TYPE.Point, by, props, { name: getNextName() });
+  }
 
-  const pointSize = 6;
-  const paddingSize = 4;
-  const figureStyle = {
-    backgroundColor: "black",
-    width: `${pointSize}px`,
-    height: `${pointSize}px`,
-    borderRadius: "50%",
-    left: paddingSize,
-    top: paddingSize,
-  };
-  const wrapperStyle = {
-    width: `${pointSize + paddingSize * 2}px`,
-    height: `${pointSize + paddingSize * 2}px`,
-    left: pos.x - pointSize / 2 - paddingSize,
-    top: pos.y - pointSize / 2 - paddingSize,
-  };
+  static byAbsCoord(x, y) {
+    const props = { x, y };
+    return new Point(BY.AbsCoord, props);
+  }
 
-  return figureComponent(wrapperStyle, figureStyle);
+  static byRotPnt(counterPoint, refPoint, angle) {
+    const props = { counterPoint, refPoint, angle };
+    return new Point(BY.RotPnt, props);
+  }
 }
 
 export default Point;
+
+export { BY };

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { remove } from "../../Figure/figureSlice";
-import FIG_TYPE from "../../Figure/FIG_TYPE";
+import { TYPE } from "../../Figure/Figure";
 import clickJudge from "../clickJudge";
 
 function RemovePointByClick() {
@@ -11,7 +11,7 @@ function RemovePointByClick() {
 
   useEffect(() => {
     const handleMouseClick = (event) => {
-      const id = clickJudge(figures, event, FIG_TYPE.point);
+      const id = clickJudge(figures, event, TYPE.Point);
       if (id !== undefined) {
         dispatch(remove(id));
       }

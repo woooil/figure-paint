@@ -1,12 +1,20 @@
-function FigureWrapper({ type, component, ...props }) {
+import { useSelector } from "react-redux";
+import getFigureStyle from "./getFigureStyle";
+
+function FigureWrapper({ id, ...props }) {
+  const figures = useSelector((state) => state.figures.value);
+  const figure = figures.find((f) => f.id === id);
+  const style = getFigureStyle(figures, id);
+
   return (
     <div
-      style={{ ...component.wrapperStyle, position: "absolute" }}
-      className={`${type.name} figure-wrapper`}
+      style={{ ...style.wrapperStyle, position: "absolute" }}
+      className={`${figure.type} figure-wrapper`}
+      id={id}
       {...props}
     >
-      <div style={{ ...component.figureStyle, position: "absolute" }}>
-        {component.child !== undefined ? component.child : ""}
+      <div style={{ ...style.figureStyle, position: "absolute" }}>
+        {style.child}
       </div>
     </div>
   );

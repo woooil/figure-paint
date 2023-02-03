@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { update, liftDep } from "../../Figure/figureSlice";
 import CANVAS_OPT from "../CANVAS_OPT";
-import FIG_TYPE from "../../Figure/FIG_TYPE";
-import POINT_DEF from "../../Figure/Point/POINT_DEF";
+import Point from "../../Figure/Point/Point";
+import { TYPE } from "../../Figure/Figure";
 import clickJudge from "../clickJudge";
 
 function MovePointByClick() {
@@ -15,7 +15,7 @@ function MovePointByClick() {
     var id = undefined;
     const handleMouseClick = (event) => {
       if (id === undefined) {
-        id = clickJudge(figures, event, FIG_TYPE.point);
+        id = clickJudge(figures, event, TYPE.Point);
       } else {
         if (
           document
@@ -23,15 +23,14 @@ function MovePointByClick() {
             .find((e) => e.id === CANVAS_OPT.id) !== undefined
         ) {
           const canvas = document.getElementById(CANVAS_OPT.id);
-          const def = {
-            by: POINT_DEF.absPos,
-            x: event.pageX - canvas.offsetLeft,
-            y: event.pageY - canvas.offsetTop,
-          };
+          const figure = Point.byAbsCoord(
+            event.pageX - canvas.offsetLeft,
+            event.pageY - canvas.offsetTop
+          );
           const payload = {
             id: id,
             with: {
-              def: def,
+              def: figure.def,
             },
           };
           dispatch(update(payload));

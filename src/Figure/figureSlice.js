@@ -53,7 +53,10 @@ export const figureSlice = createSlice({
 
     update: (state, action) => {
       const index = state.value.findIndex((f) => f.id === action.payload.id);
-      state.value[index] = { ...state.value[index], ...action.payload.with };
+      const figure = current(state.value)[index];
+      Object.assign(figure, action.payload.with);
+      state.value.splice(index, 1);
+      state.value.splice(index, 0, figure);
     },
 
     remove: (state, action) => {
@@ -68,12 +71,12 @@ export const figureSlice = createSlice({
         var determinants = newValue.find((f) => f.id === id).determinants;
         determinants.forEach((det) => {
           const detIndex = newValue.findIndex((f) => f.id === det);
-          newValue[detIndex] = {
-            ...newValue[detIndex],
-            dependants: newValue[detIndex].dependants.filter(
-              (dep) => dep !== id
-            ),
-          };
+          const figure = newValue[detIndex];
+          figure.dependants = newValue[detIndex].dependants.filter(
+            (dep) => dep !== id
+          );
+          state.value.splice(detIndex, 1);
+          state.value.splice(detIndex, 0, figure);
         });
         newValue.splice(
           newValue.findIndex((f) => f.id === id),

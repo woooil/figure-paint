@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { create, setDep } from "../../Figure/figureSlice";
-import FIG_TYPE from "../../Figure/FIG_TYPE";
-import newFigure from "../../Figure/newFigure";
-import POINT_DEF from "../../Figure/Point/POINT_DEF";
+import { TYPE } from "../../Figure/Figure";
+import Point from "../../Figure/Point/Point";
 
 import clickJudge from "../clickJudge";
 
@@ -17,18 +16,12 @@ function CreatePointByRotPnt() {
   useEffect(() => {
     var points = [];
     const handleMouseClick = (event) => {
-      const id = clickJudge(figures, event, FIG_TYPE.point);
+      const id = clickJudge(figures, event, TYPE.Point);
       if (id !== undefined) {
         points.push(id);
       }
       if (points.length === 2) {
-        const def = {
-          by: POINT_DEF.rotPnt,
-          counterPoint: points[0],
-          refPoint: points[1],
-          angle: angle,
-        };
-        const figure = newFigure(FIG_TYPE.point, def);
+        const figure = Point.byRotPnt(points[0], points[1], angle);
         dispatch(create(figure));
         dispatch(setDep({ determinant: points[0], dependant: figure.id }));
         dispatch(setDep({ determinant: points[1], dependant: figure.id }));

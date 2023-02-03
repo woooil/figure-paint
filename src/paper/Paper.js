@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import PaperMode from "./PaperMode";
 import CANVAS_OPT from "./CANVAS_OPT";
-import Figure from "../Figure/Figure";
+import FigureWrapper from "../Figure/FigureWrapper";
 
 function Paper() {
   const figures = useSelector((state) => state.figures.value);
@@ -26,7 +26,7 @@ function Paper() {
       <PaperMode />
       <div id={CANVAS_OPT.id} style={canvasStyle}>
         {figures.map((figure) => (
-          <Figure id={figure.id} key={figure.id} />
+          <FigureWrapper id={figure.id} key={figure.id} />
         ))}
       </div>
     </div>

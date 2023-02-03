@@ -1,29 +1,22 @@
-import { useSelector } from "react-redux";
+import { TYPE } from "../Figure";
+import Figure from "../Figure";
 
-import figureComponent from "../figureComponent";
-import getPointPos from "../Point/getPointPos";
-import getTextDim from "./getTextDim";
+const BY = {
+  RelToFig: "RelToFig",
+};
+Object.freeze(BY);
 
-function Label({ id }) {
-  const figures = useSelector((state) => state.figures.value);
-  const label = figures.find((f) => f.id === id);
-  const name = figures.find((f) => f.id === label.def.host).name;
-  const hostPos = getPointPos(figures, label.def.host);
-  const dim = getTextDim(name, "");
+class Label extends Figure {
+  constructor(by, props) {
+    super(TYPE.Label, by, props);
+  }
 
-  const paddingSize = 4;
-  const figureStyle = {
-    left: paddingSize,
-    top: paddingSize,
-  };
-  const wrapperStyle = {
-    width: dim.width + paddingSize * 2,
-    height: dim.height + paddingSize * 2,
-    left: hostPos.x + label.def.x - dim.width / 2 - paddingSize,
-    top: hostPos.y + label.def.y - paddingSize,
-  };
-
-  return figureComponent(wrapperStyle, figureStyle, name);
+  static byRelToFig(host, x, y) {
+    const props = { host, x, y };
+    return new Label(BY.RelToFig, props);
+  }
 }
 
 export default Label;
+
+export { BY };

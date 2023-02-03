@@ -2,9 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 import { create, setDep } from "../../Figure/figureSlice";
-import FIG_TYPE from "../../Figure/FIG_TYPE";
-import newFigure from "../../Figure/newFigure";
-import SEGMENT_DEF from "../../Figure/Segment/SEGMENT_DEF";
+import { TYPE } from "../../Figure/Figure";
+import Segment from "../../Figure/Segment/Segment";
 import clickJudge from "../clickJudge";
 
 function CreateSegByClkEndpnts() {
@@ -14,7 +13,7 @@ function CreateSegByClkEndpnts() {
   useEffect(() => {
     var endpoints = [];
     const handleMouseClick = (event) => {
-      const id = clickJudge(figures, event, FIG_TYPE.point);
+      const id = clickJudge(figures, event, TYPE.Point);
       if (
         id !== undefined &&
         (endpoints.length === 0 || id.id !== endpoints[0])
@@ -22,12 +21,13 @@ function CreateSegByClkEndpnts() {
         endpoints.push(id);
       }
       if (endpoints.length === 2) {
-        const def = {
-          by: SEGMENT_DEF.endpnts,
-          fst: endpoints[0],
-          snd: endpoints[1],
-        };
-        const segment = newFigure(FIG_TYPE.segment, def);
+        // const def = {
+        //   by: SEGMENT_DEF.endpnts,
+        //   fst: endpoints[0],
+        //   snd: endpoints[1],
+        // };
+        // const segment = newFigure(FIG_TYPE.segment, def);
+        const segment = Segment.byEndpnts(endpoints[0], endpoints[1]);
         dispatch(create(segment));
         dispatch(setDep({ determinant: endpoints[0], dependant: segment.id }));
         dispatch(setDep({ determinant: endpoints[1], dependant: segment.id }));
