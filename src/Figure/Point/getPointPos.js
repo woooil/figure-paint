@@ -1,5 +1,6 @@
 import POINT_DEF from "./POINT_DEF";
 import rotatePos from "./rotatePos";
+import Coord from "./Coord";
 
 function getPointPos(figures, id) {
   const point = figures.find((f) => f.id === id);
@@ -18,7 +19,7 @@ function getPointPos(figures, id) {
       break;
   }
 
-  return pos;
+  return new Coord(pos.x, pos.y);
 }
 
 export default getPointPos;
