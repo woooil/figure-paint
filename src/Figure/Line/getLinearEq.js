@@ -1,5 +1,6 @@
+import { BY } from "./Line";
 import LinearEq from "./LinearEq";
-import getPointPos from "../Point/getPointPos";
+import getPointCoord from "../Point/getPointCoord";
 
 /**
  * Calculate linear equation of line
@@ -15,9 +16,9 @@ function getLinearEq(figures, id) {
   const line = figures.find((f) => f.id === id);
   var co = { a: 0, b: 0, c: 0 };
   switch (line.def.by) {
-    case LINE_DEF.twoPnts:
-      const fst = getPointPos(figures, line.def.fst);
-      const snd = getPointPos(figures, line.def.snd);
+    case BY.TwoPnts:
+      const fst = getPointCoord(figures, line.def.fst);
+      const snd = getPointCoord(figures, line.def.snd);
       if (fst.x === snd.x) {
         co.a = 1;
         co.b = 0;
@@ -28,9 +29,9 @@ function getLinearEq(figures, id) {
         co.c = (snd.x * fst.y - fst.x * snd.y) / (fst.x - snd.x);
       }
       break;
-    case LINE_DEF.parLnToPnt:
-      const refLine = getLineEq(figures, line.def.refLine);
-      const point = getPointPos(figures, line.def.point);
+    case BY.ParLn:
+      const refLine = getLinearEq(figures, line.def.refLine);
+      const point = getPointCoord(figures, line.def.point);
       if (refLine.b === 0) {
         co.a = 1;
         co.b = 0;

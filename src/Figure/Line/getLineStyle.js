@@ -1,27 +1,12 @@
-import FigureStyle from "../FigureStyle";
-import getLinePosAng from "./getLinePosAng";
-import LINE_STYLE from "./LINE_STYLE";
+import getLinearEq from "./getLinearEq";
+import getIntsecsWithCanvas from "./getIntsecsWithCanvas";
+import getLineStyleHelper from "./getLineStyleHelper";
 
 function getLineStyle(figures, id) {
-  const paddingWidth = 4;
-  const len = 2500;
-  const { pos, angle } = getLinePosAng(figures, id, len);
+  const linearEq = getLinearEq(figures, id);
+  const coords = getIntsecsWithCanvas(linearEq);
 
-  const figureStyle = {
-    backgroundColor: LINE_STYLE.backgroundColor,
-    width: `${len}px`,
-    height: `${LINE_STYLE.lineWidth}px`,
-    top: paddingWidth - LINE_STYLE.lineWidth / 2,
-  };
-  const wrapperStyle = {
-    width: `${len}px`,
-    height: `${paddingWidth * 2}px`,
-    transform: `rotate(${angle}deg)`,
-    left: pos.x,
-    top: pos.y - paddingWidth,
-  };
-
-  return new FigureStyle(wrapperStyle, figureStyle);
+  return getLineStyleHelper(coords[0], coords[1]);
 }
 
 export default getLineStyle;
