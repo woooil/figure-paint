@@ -7,9 +7,8 @@ import Point from "../../Figure/Point/Point";
 import getDistance from "../../Figure/Point/getDistance";
 import getLength from "../../Figure/Segment/getLength";
 import clickJudge from "../clickJudge";
-import CANVAS_OPT from "../CANVAS_OPT";
-import Coord from "../../Figure/Point/Coord";
 import getPointCoord from "../../Figure/Point/getPointCoord";
+import getOffset from "../getOffset";
 
 function CreatePointOnSeg() {
   const figures = useSelector((state) => state.figures.value);
@@ -20,12 +19,8 @@ function CreatePointOnSeg() {
     const handleMouseClick = (event) => {
       segment = clickJudge(figures, event, TYPE.Segment);
       if (segment !== undefined) {
-        const canvas = document.getElementById(CANVAS_OPT.id);
-        const coord = new Coord(
-          event.pageX - canvas.offsetLeft,
-          event.pageY - canvas.offsetTop
-        );
         const segmentObj = figures.find((f) => f.id === segment);
+        const coord = getOffset(event);
         const ratio =
           getDistance(coord, getPointCoord(figures, segmentObj.def.fst)) /
           getLength(figures, segment);

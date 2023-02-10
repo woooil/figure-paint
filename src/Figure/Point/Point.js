@@ -1,6 +1,7 @@
 import { TYPE } from "../Figure";
 import Figure from "../Figure";
 import getNextName from "./getNextName";
+import getPointCoord from "./getPointCoord";
 
 const BY = {
   AbsCoord: "AbsCoord",
@@ -13,6 +14,13 @@ Object.freeze(BY);
 class Point extends Figure {
   constructor(by, props) {
     super(TYPE.Point, by, props, { name: getNextName() });
+  }
+
+  draw(figures) {
+    const pos = getPointCoord(figures, this.id);
+    return (
+      <circle cx={pos.x} cy={pos.y} r="3" fill="black" {...this.commonProps} />
+    );
   }
 
   static byAbsCoord(x, y) {

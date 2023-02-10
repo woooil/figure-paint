@@ -1,6 +1,6 @@
 const CANVAS_OPT = {
   id: "canvas",
-  width: 900,
+  width: 600,
   height: 600,
 };
 Object.freeze(CANVAS_OPT);

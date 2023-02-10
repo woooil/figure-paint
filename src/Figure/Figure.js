@@ -17,6 +17,24 @@ class Figure {
     this.dependants = [];
     Object.assign(this, extensions);
   }
+
+  draw(figures) {
+    return "";
+  }
+
+  get commonProps() {
+    return {
+      stroke: "white",
+      strokeWidth: "4",
+      strokeOpacity: "0",
+      style: {
+        display: this.visible === false ? "none" : "",
+      },
+      className: `${this.type} figure`,
+      id: this.id,
+      key: this.id,
+    };
+  }
 }
 
 export default Figure;

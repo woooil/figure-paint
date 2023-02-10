@@ -14,7 +14,7 @@ function CreateLabelByClick() {
     const handleMouseClick = (event) => {
       const element = clickJudge(figures, event, TYPE.Point);
       if (element !== undefined) {
-        const figure = Label.byRelToFig(element, 0, -30);
+        const figure = Label.byRelToFig(element, 0, -10);
         dispatch(create(figure));
         dispatch(setDep({ determinant: element, dependant: figure.id }));
       }

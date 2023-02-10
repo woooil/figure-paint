@@ -2,7 +2,7 @@ function clickJudge(figures, event, type = undefined) {
   const elements = document.elementsFromPoint(event.clientX, event.clientY);
   const paddings = elements.filter(
     (e) =>
-      e.classList.contains("figure-wrapper") &&
+      e.classList.contains("figure") &&
       (type === undefined || e.classList.contains(type))
   );
   const id = paddings.map((p) => p.id);
