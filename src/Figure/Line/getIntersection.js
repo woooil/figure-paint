@@ -2,7 +2,6 @@ import Coord from "../Point/Coord";
 
 // Reference: https://www.geeksforgeeks.org/pair-of-linear-equations-in-two-variables/
 function getIntersection(fst, snd) {
-  console.log(fst, snd);
   // Coincident if [ a = a' AND b = b' = 1 AND c = c' ] OR [ a = a' = 1 AND b = b' = 0 AND c = c' ]
   if (
     fst.a === snd.a &&
