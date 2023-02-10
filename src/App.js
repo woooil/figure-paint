@@ -1,5 +1,6 @@
 import Paper from "./Paper/Paper";
 import "./style/style.css";
+import "./style/fonts.css";
 
 function App() {
   return (
