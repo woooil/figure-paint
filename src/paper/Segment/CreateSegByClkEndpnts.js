@@ -21,12 +21,6 @@ function CreateSegByClkEndpnts() {
         endpoints.push(id);
       }
       if (endpoints.length === 2) {
-        // const def = {
-        //   by: SEGMENT_DEF.endpnts,
-        //   fst: endpoints[0],
-        //   snd: endpoints[1],
-        // };
-        // const segment = newFigure(FIG_TYPE.segment, def);
         const segment = Segment.byEndpnts(endpoints[0], endpoints[1]);
         dispatch(create(segment));
         dispatch(setDep({ determinant: endpoints[0], dependant: segment.id }));

@@ -17,8 +17,7 @@ function Paper() {
   };
 
   useEffect(() => {
-    console.log("figure updated:");
-    console.log(figures);
+    console.log("figure updated:", figures);
   }, [figures]);
 
   return (

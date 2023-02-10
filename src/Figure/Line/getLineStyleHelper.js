@@ -1,3 +1,4 @@
+import getDistance from "../Point/getDistance";
 import FigureStyle from "../FigureStyle";
 
 function getLineStyleHelper(fstCoord, sndCoord) {
@@ -5,9 +6,7 @@ function getLineStyleHelper(fstCoord, sndCoord) {
   const backgroundColor = "black";
   const lineWidth = 2;
 
-  const len = Math.sqrt(
-    (fstCoord.x - sndCoord.x) ** 2 + (fstCoord.y - sndCoord.y) ** 2
-  );
+  const len = getDistance(fstCoord, sndCoord);
   const angle =
     (Math.atan((sndCoord.y - fstCoord.y) / (sndCoord.x - fstCoord.x)) * 180) /
     Math.PI;
