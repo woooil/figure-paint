@@ -8,12 +8,21 @@ function FigureWrapper({ id, ...props }) {
 
   return (
     <div
-      style={{ ...style.wrapperStyle, position: "absolute" }}
+      style={{
+        ...style.wrapperStyle,
+        position: "absolute",
+        display: figure.visible === false ? "none" : "",
+      }}
       className={`${figure.type} figure-wrapper`}
       id={id}
       {...props}
     >
-      <div style={{ ...style.figureStyle, position: "absolute" }}>
+      <div
+        style={{
+          ...style.figureStyle,
+          position: "absolute",
+        }}
+      >
         {style.child}
       </div>
     </div>
