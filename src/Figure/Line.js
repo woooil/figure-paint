@@ -1,48 +1,62 @@
 import { TYPE } from "./Figure";
 import Figure from "./Figure";
 import LinearEq from "../Math/LinearEq";
+import Segment from "./Segment";
 
+/**
+ * The definition method of a Line.
+ * @readonly
+ * @enum {DefBy}
+ */
 const BY = {
+  /** @type {DefBy} By two Points a Line passes through. */
   TwoPnts: "TwoPnts",
+  /** @type {DefBy} By translating another Line parallel. */
   ParLn: "ParLn",
 };
 Object.freeze(BY);
 
+/**
+ * Class representing a line figure.
+ * @extends Figure
+ */
 class Line extends Figure {
+  /**
+   * Create a Line.
+   * @param {DefBy}   by    - The definition method of a Line.
+   * @param {Object}  props - The properties for the definition of a Line.
+   */
   constructor(by, props) {
     super(TYPE.Line, by, props);
   }
 
+  /**
+   * Create a Line by two Points it passes through.
+   * @param {Id} fst - The Id of the first Point.
+   * @param {Id} snd - The Id of the second Point.
+   */
   static byTwoPnts(fst, snd) {
     const props = { fst, snd };
     return new Line(BY.TwoPnts, props);
   }
 
+  /**
+   * Create a Line by translate another Line parallel.
+   * @param {Id} refLine  - The Id of the Line to translate.
+   * @param {Id} point    - The Id of the Point a Line passes thorugh.
+   */
   static byParLn(refLine, point) {
     const props = { refLine, point };
     return new Line(BY.ParLn, props);
-  }
-
-  static attr(fstCoord, sndCoord) {
-    const lineWidth = 2;
-    const len = fstCoord.distanceFrom(sndCoord);
-    const angle =
-      (Math.atan2(sndCoord.y - fstCoord.y, sndCoord.x - fstCoord.x) * 180) /
-      Math.PI;
-    return {
-      x: fstCoord.x,
-      y: fstCoord.y - lineWidth / 2,
-      width: len,
-      height: lineWidth,
-      transform: `rotate(${angle}, ${fstCoord.x}, ${fstCoord.y})`,
-    };
   }
 
   get draw() {
     const linearEq = this.figures.fig(this.id).linearEq;
     const coords = linearEq.intersectionWithCanvas();
 
-    return <rect {...Line.attr(coords[0], coords[1])} {...this.commonProps} />;
+    return (
+      <rect {...Segment.attr(coords[0], coords[1])} {...this.commonProps} />
+    );
   }
 
   get linearEq() {

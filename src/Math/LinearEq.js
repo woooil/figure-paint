@@ -1,24 +1,31 @@
 import Coord from "./Coord";
 import CANVAS_OPT from "../Paper/CANVAS_OPT";
 
-/**
- * The equations is as the following form:
- *     [[ ax + by + c = 0 where b = 1 XOR (b = 0 AND a = 1) ]]
- * Note that b only has the value 0 or 1.
- *
- * @property {number} a - The coefficient of x.
- * @property {number} b - The coefficient of y.
- * @property {number} c - The constant term.
- *
- */
+/**  Class of an algebra model expressing a linear equation in two variables. */
 class LinearEq {
+  /**
+   * Create a Linear equation.
+   *
+   * The equation is as the following form:
+   *     [[ ax + by + c = 0 where b = 1 XOR (b = 0 AND a = 1) ]]
+   * Note that b only has the value 0 or 1.
+   *
+   * @param {number} a - The coefficient of x.
+   * @param {number} b - The coefficient of y.
+   * @param {number} c - The constant term.
+   */
   constructor(a, b, c) {
     this.a = a;
     this.b = b;
     this.c = c;
   }
 
-  // Reference: https://www.geeksforgeeks.org/pair-of-linear-equations-in-two-variables/
+  /**
+   * Get an intersection with the given Linear eqauation.
+   * @param   {LinearEq}    eq  - Another Linear equation to calulate the intersection with.
+   * @returns {Coord | string}  A Coord object of intersection if there is exactly one point of intersection. Else, "Coincident" or "Parallel" depending on condition.
+   * @see {@link https://www.geeksforgeeks.org/pair-of-linear-equations-in-two-variables/}
+   */
   intersectionWith(eq) {
     // Coincident if [ a = a' AND b = b' = 1 AND c = c' ] OR [ a = a' = 1 AND b = b' = 0 AND c = c' ]
     if (
@@ -47,6 +54,10 @@ class LinearEq {
     return new Coord(x, y);
   }
 
+  /**
+   * Get two intersections with the Canvas.
+   * @returns {Coord[]} Two Coords of intersection with the Canvas.
+   */
   intersectionWithCanvas() {
     const pad = 5;
 
