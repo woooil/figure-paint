@@ -21,6 +21,8 @@ const TYPE = {
   Segment: "Segment",
   /** @type {FigType} Label type. */
   Label: "Label",
+  /** @type {FigType} Mark type. */
+  Mark: "Mark",
 };
 Object.freeze(TYPE);
 

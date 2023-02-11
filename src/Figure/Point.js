@@ -35,8 +35,9 @@ class Point extends Figure {
 
   /**
    * Create a Point by an absolute coordinate.
-   * @param {number} x  - The x value.
-   * @param {number} y  - The y value.
+   * @param   {number} x  - The x value.
+   * @param   {number} y  - The y value.
+   * @returns {Point}       The Point.
    */
   static byAbsCoord(x, y) {
     const props = { x, y };
@@ -45,9 +46,10 @@ class Point extends Figure {
 
   /**
    * Create a Point by rotating another Point.
-   * @param {Id}      counterPoint  - The Id of the Point to rotate.
-   * @param {Id}      refPoint      - The Id of the reference Point for the rotation.
-   * @param {number}  angle         - The angle by which a Point is rotated.
+   * @param   {Id}      counterPoint  - The Id of the Point to rotate.
+   * @param   {Id}      refPoint      - The Id of the reference Point for the rotation.
+   * @param   {number}  angle         - The angle by which a Point is rotated.
+   * @returns {Point}                   The Point.
    */
   static byRotPnt(counterPoint, refPoint, angle) {
     const props = { counterPoint, refPoint, angle };
@@ -56,8 +58,9 @@ class Point extends Figure {
 
   /**
    * Create a Point by locating on a Segment.
-   * @param {Id}      segment - The Id of the Segment on which a Point is.
-   * @param {number}  ratio   - The ratio by which a Point divide the Segment.
+   * @param   {Id}      segment - The Id of the Segment on which a Point is.
+   * @param   {number}  ratio   - The ratio by which a Point divide the Segment.
+   * @returns {Point}             The Point.
    */
   static byOnSeg(segment, ratio) {
     const props = { segment, ratio };
@@ -66,8 +69,9 @@ class Point extends Figure {
 
   /**
    * Create a Point by intersecting two Lines.
-   * @param {Id} fstLine - The Id of the first Line.
-   * @param {Id} sndLine - The Id of the second Line.
+   * @param   {Id} fstLine - The Id of the first Line.
+   * @param   {Id} sndLine - The Id of the second Line.
+   * @returns {Point}        The Point.
    */
   static byIntsec(fstLine, sndLine) {
     const props = { fstLine, sndLine };
@@ -96,7 +100,7 @@ class Point extends Figure {
    *  @type {React.SVGProps<SVGCircleElement>}
    */
   get draw() {
-    const pos = this.figures.fig(this.id).coord;
+    const pos = this.coord;
     return (
       <circle cx={pos.x} cy={pos.y} r="3" fill="black" {...this.commonProps} />
     );
@@ -137,5 +141,4 @@ class Point extends Figure {
 }
 
 export default Point;
-
 export { BY };

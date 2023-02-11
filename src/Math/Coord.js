@@ -57,6 +57,21 @@ class Coord {
     );
     return distance;
   }
+
+  /**
+   * Get a Coord at the given distance from a segment constructed by the given coord and itself.
+   * @param   {Coord}   coord     - The Coord to construct a segment with itself.
+   * @param   {number}  distance  - The distance at which a Coord is from the segment.
+   * @returns {Coord}               The distant Coord.
+   */
+  atDistance(coord, distance) {
+    const mid = new Coord((this.x + coord.x) / 2, (this.y + coord.y) / 2);
+    const theta = Math.atan2(coord.y - this.y, coord.x - this.x);
+    return new Coord(
+      mid.x + distance * Math.sin(theta),
+      mid.y - distance * Math.cos(theta)
+    );
+  }
 }
 
 export default Coord;

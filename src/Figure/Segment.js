@@ -28,8 +28,9 @@ class Segment extends Figure {
 
   /**
    * Create a Segment by two endpoints.
-   * @param {Id} fst - The Id of the first Point.
-   * @param {Id} snd - The Id of the second Point.
+   * @param   {Id} fst - The Id of the first Point.
+   * @param   {Id} snd - The Id of the second Point.
+   * @returns {Segment}  The Segment.
    */
   static byEndpnts(fst, snd) {
     const props = { fst, snd };
@@ -72,13 +73,20 @@ class Segment extends Figure {
    * @type {number}
    */
   get length() {
-    const segment = this.figures.fig(this.id);
-    const fstCoord = this.figures.fig(segment.def.fst).coord;
-    const sndCoord = this.figures.fig(segment.def.snd).coord;
+    const fstCoord = this.figures.fig(this.def.fst).coord;
+    const sndCoord = this.figures.fig(this.def.snd).coord;
     return fstCoord.distanceFrom(sndCoord);
+  }
+
+  /**
+   * The Coords of the Segment's endpoints.
+   * @type {Coord[]}
+   */
+  get endCoords() {
+    const endpnts = [this.def.fst, this.def.snd];
+    return endpnts.map((p) => this.figures.fig(p).coord);
   }
 }
 
 export default Segment;
-
 export { BY };

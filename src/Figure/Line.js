@@ -32,8 +32,9 @@ class Line extends Figure {
 
   /**
    * Create a Line by two Points it passes through.
-   * @param {Id} fst - The Id of the first Point.
-   * @param {Id} snd - The Id of the second Point.
+   * @param   {Id} fst - The Id of the first Point.
+   * @param   {Id} snd - The Id of the second Point.
+   * @returns {Line}     The Line.
    */
   static byTwoPnts(fst, snd) {
     const props = { fst, snd };
@@ -44,14 +45,19 @@ class Line extends Figure {
    * Create a Line by translate another Line parallel.
    * @param {Id} refLine  - The Id of the Line to translate.
    * @param {Id} point    - The Id of the Point a Line passes thorugh.
+   * @returns {Line}        The Line.
    */
   static byParLn(refLine, point) {
     const props = { refLine, point };
     return new Line(BY.ParLn, props);
   }
 
+  /**
+   *  The actual React component drawing the Line.
+   *  @type {React.SVGProps<SVGRectElement>}
+   */
   get draw() {
-    const linearEq = this.figures.fig(this.id).linearEq;
+    const linearEq = this.linearEq;
     const coords = linearEq.intersectionWithCanvas();
 
     return (
@@ -59,13 +65,16 @@ class Line extends Figure {
     );
   }
 
+  /**
+   * The linear equation of the Line.
+   * @type {LinearEq}
+   */
   get linearEq() {
-    const line = this.figures.fig(this.id);
     var co = { a: 0, b: 0, c: 0 };
-    switch (line.def.by) {
+    switch (this.def.by) {
       case BY.TwoPnts:
-        const fst = this.figures.fig(line.def.fst).coord;
-        const snd = this.figures.fig(line.def.snd).coord;
+        const fst = this.figures.fig(this.def.fst).coord;
+        const snd = this.figures.fig(this.def.snd).coord;
         if (fst.x === snd.x) {
           co.a = 1;
           co.b = 0;
@@ -77,8 +86,8 @@ class Line extends Figure {
         }
         break;
       case BY.ParLn:
-        const refLine = this.figures.fig(line.def.refLine).linearEq;
-        const point = this.figures.fig(line.def.point).coord;
+        const refLine = this.figures.fig(this.def.refLine).linearEq;
+        const point = this.figures.fig(this.def.point).coord;
         if (refLine.b === 0) {
           co.a = 1;
           co.b = 0;
@@ -97,5 +106,4 @@ class Line extends Figure {
 }
 
 export default Line;
-
 export { BY };
