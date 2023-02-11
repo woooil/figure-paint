@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { update, liftDep } from "../../Figure/figureSlice";
 import CANVAS_OPT from "../CANVAS_OPT";
-import Point from "../../Figure/Point/Point";
+import Point from "../../Figure/Point";
 import { TYPE } from "../../Figure/Figure";
 import clickJudge from "../clickJudge";
 import getOffset from "../getOffset";
@@ -21,7 +21,7 @@ function MovePointByClick() {
         if (
           document
             .elementsFromPoint(event.clientX, event.clientY)
-            .find((e) => e.id === CANVAS_OPT.id) !== undefined
+            .fig(CANVAS_OPT.id) !== undefined
         ) {
           const coord = getOffset(event);
           const figure = Point.byAbsCoord(coord.x, coord.y);
@@ -32,7 +32,7 @@ function MovePointByClick() {
             },
           };
           dispatch(update(payload));
-          const determinants = figures.find((f) => f.id === id).determinants;
+          const determinants = figures.fig(id).determinants;
           determinants.forEach((det) => {
             dispatch(liftDep({ determinant: det, dependant: id }));
           });

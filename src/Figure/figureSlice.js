@@ -6,6 +6,13 @@ const initialState = {
   value: [],
 };
 
+// eslint-disable-next-line
+Object.defineProperty(Array.prototype, "fig", {
+  value: function (id) {
+    return this.find((f) => f.id === id);
+  },
+});
+
 /**
  * Slice for figure.
  *

@@ -3,11 +3,8 @@ import { useEffect } from "react";
 
 import { create, setDep } from "../../Figure/figureSlice";
 import { TYPE } from "../../Figure/Figure";
-import Point from "../../Figure/Point/Point";
-import getDistance from "../../Figure/Point/getDistance";
-import getLength from "../../Figure/Segment/getLength";
+import Point from "../../Figure/Point";
 import clickJudge from "../clickJudge";
-import getPointCoord from "../../Figure/Point/getPointCoord";
 import getOffset from "../getOffset";
 
 function CreatePointOnSeg() {
@@ -19,11 +16,12 @@ function CreatePointOnSeg() {
     const handleMouseClick = (event) => {
       segment = clickJudge(figures, event, TYPE.Segment);
       if (segment !== undefined) {
-        const segmentObj = figures.find((f) => f.id === segment);
+        const segmentObj = figures.fig(segment);
         const coord = getOffset(event);
         const ratio =
-          getDistance(coord, getPointCoord(figures, segmentObj.def.fst)) /
-          getLength(figures, segment);
+          // getDistance(coord, figures.fig(segmentObj.def.fst).coord) /
+          coord.distanceFrom(figures.fig(segmentObj.def.fst).coord) /
+          figures.fig(segment).length;
         const point = Point.byOnSeg(segment, ratio);
         dispatch(create(point));
         dispatch(setDep({ determinant: segment, dependant: point.id }));

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { create, setDep } from "../../Figure/figureSlice";
 import { TYPE } from "../../Figure/Figure";
-import Line from "../../Figure/Line/Line";
+import Line from "../../Figure/Line";
 import clickJudge from "../clickJudge";
 
 function CreateLineByClkTwoPnts() {

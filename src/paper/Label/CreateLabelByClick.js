@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { create, setDep } from "../../Figure/figureSlice";
 import { TYPE } from "../../Figure/Figure";
-import Label from "../../Figure/Label/Label";
+import Label from "../../Figure/Label";
 import clickJudge from "../clickJudge";
 
 function CreateLabelByClick() {

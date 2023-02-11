@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { create, setDep } from "../../Figure/figureSlice";
 import { TYPE } from "../../Figure/Figure";
-import Segment from "../../Figure/Segment/Segment";
+import Segment from "../../Figure/Segment";
 import clickJudge from "../clickJudge";
 
 function CreateSegByClkEndpnts() {

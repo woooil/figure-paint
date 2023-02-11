@@ -23,7 +23,7 @@ function Paper() {
     <div>
       <PaperMode />
       <svg id={CANVAS_OPT.id} style={canvasStyle}>
-        {figures.map((figure) => figure.draw(figures))}
+        {figures.map((figure) => figure.draw)}
       </svg>
       <div style={{ width: 2000, height: 2000 }}></div>
     </div>

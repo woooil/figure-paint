@@ -6,7 +6,7 @@ function clickJudge(figures, event, type = undefined) {
       (type === undefined || e.classList.contains(type))
   );
   const id = paddings.map((p) => p.id);
-  const figuresSelcted = id.map((i) => figures.find((f) => f.id === i));
+  const figuresSelcted = id.map((i) => figures.fig(i));
   return figuresSelcted.length > 0 ? figuresSelcted[0].id : undefined;
 }
 

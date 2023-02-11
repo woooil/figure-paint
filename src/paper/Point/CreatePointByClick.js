@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { create } from "../../Figure/figureSlice";
 import CANVAS_OPT from "../CANVAS_OPT";
-import Point from "../../Figure/Point/Point";
+import Point from "../../Figure/Point";
 import getOffset from "../getOffset";
 
 function CreatePointByClick() {
@@ -14,7 +14,7 @@ function CreatePointByClick() {
       if (
         document
           .elementsFromPoint(event.clientX, event.clientY)
-          .find((e) => e.id === CANVAS_OPT.id) !== undefined
+          .fig(CANVAS_OPT.id) !== undefined
       ) {
         const coord = getOffset(event);
         const figure = Point.byAbsCoord(coord.x, coord.y);

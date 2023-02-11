@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { store } from "../store";
 
 const TYPE = {
   Point: "Point",
@@ -18,10 +19,6 @@ class Figure {
     Object.assign(this, extensions);
   }
 
-  draw(figures) {
-    return "";
-  }
-
   get commonProps() {
     return {
       stroke: "white",
@@ -34,6 +31,14 @@ class Figure {
       id: this.id,
       key: this.id,
     };
+  }
+
+  get figures() {
+    return store.getState().figures.value;
+  }
+
+  get draw() {
+    return "";
   }
 }
 
