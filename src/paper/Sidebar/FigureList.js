@@ -30,25 +30,28 @@ function FigureList(props) {
   };
 
   return (
-    <div {...props} style={{ flex: 1 }}>
+    <div
+      {...props}
+      style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+      }}
+    >
       <Typography color="text.secondary" display="block" variant="caption">
         List of figures:
       </Typography>
       <Box
         sx={{
           width: "100%",
-          height: "300px",
           overflow: "auto",
         }}
       >
         <List>
           {figures.map((f, index) => (
-            <ListItem disablePadding>
-              <Tooltip
-                title={definition(f.description)}
-                placement="right"
-                key={index}
-              >
+            <ListItem disablePadding key={index}>
+              <Tooltip title={definition(f.description)} placement="right">
                 <Button fullWidth>
                   {f.type} {f.name}
                 </Button>
