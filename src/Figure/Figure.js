@@ -21,8 +21,6 @@ const TYPE = {
   Segment: "Segment",
   /** @type {FigType} Label type. */
   Label: "Label",
-  /** @type {FigType} Mark type. */
-  Mark: "Mark",
 };
 Object.freeze(TYPE);
 
@@ -35,15 +33,13 @@ class Figure {
    * @param {FigType} type            - The type of a Figure.
    * @param {DefBy}   by              - The definition method of a Figure.
    * @param {Object}  props           - The properties for the definition of a Figure.
-   * @param {Object}  [extensions={}] - The extra properties for a Figure.
    */
-  constructor(type, by, props, extensions = {}) {
+  constructor(type, by, props) {
     this.#id = uuidv4().slice(-4);
     this.type = type;
     this.def = { by, ...props };
     this.determinants = [];
     this.dependants = [];
-    Object.assign(this, extensions);
   }
 
   /**
@@ -66,7 +62,7 @@ class Figure {
       style: {
         display: this.visible === false ? "none" : "",
       },
-      className: `${this.type} figure`,
+      className: `${this.type.toLowerCase()} figure`,
       id: this.id,
       key: this.id,
     };
@@ -86,6 +82,22 @@ class Figure {
    */
   get draw() {
     return <></>;
+  }
+
+  /**
+   * The human-readable name based on Foint's names of the Figure.
+   * @type {string}
+   */
+  get name() {
+    return "Any";
+  }
+
+  /**
+   * The description of the Figure's definition.
+   * @type {string}
+   */
+  get description() {
+    return "Any definition";
   }
 }
 

@@ -1,33 +1,48 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import PaperMode from "./PaperMode";
-import CANVAS_OPT from "./CANVAS_OPT";
+import Coord from "../Math/Coord";
 
-function Paper() {
-  const figures = useSelector((state) => state.figures.value);
+class Paper {
+  static className = "paper";
 
-  const canvasStyle = {
-    backgroundColor: "gray",
-    width: `${CANVAS_OPT.width}px`,
-    height: `${CANVAS_OPT.height}.px`,
-    overflow: "hidden",
-    margin: "10px",
-    position: "absolute",
-  };
+  static get width() {
+    return Paper.element.clientWidth;
+  }
 
-  useEffect(() => {
-    console.log("figure updated:", figures);
-  }, [figures]);
+  static get height() {
+    return Paper.element.clientHeight;
+  }
 
-  return (
-    <div>
-      <PaperMode />
-      <svg id={CANVAS_OPT.id} style={canvasStyle}>
-        {figures.map((figure) => figure.draw)}
-      </svg>
-      <div style={{ width: 2000, height: 2000 }}></div>
-    </div>
-  );
+  static get element() {
+    return document.getElementsByClassName(Paper.className)[0];
+  }
+
+  static isClicked(event) {
+    return (
+      document
+        .elementsFromPoint(event.clientX, event.clientY)
+        .find((e) => e.classList.contains(Paper.className)) !== undefined
+    );
+  }
+
+  static offsetOf(event) {
+    const canvas = Paper.element;
+    let bound = canvas.getBoundingClientRect();
+    let html = document.documentElement;
+
+    return new Coord(
+      event.pageX - bound.left - window.pageXOffset + html.clientLeft,
+      event.pageY - bound.top - window.pageYOffset + html.clientTop
+    );
+  }
 }
 
+const DrawPaper = ({ figures }) => {
+  return (
+    <svg className={Paper.className}>
+      {figures.map((figure) => figure.draw)}
+    </svg>
+  );
+};
+
 export default Paper;
+
+export { DrawPaper };

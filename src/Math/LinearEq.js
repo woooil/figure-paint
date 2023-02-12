@@ -1,5 +1,5 @@
 import Coord from "./Coord";
-import CANVAS_OPT from "../Paper/CANVAS_OPT";
+import Paper from "../Paper/Paper";
 
 /**  Class of an algebra model expressing a linear equation in two variables. */
 class LinearEq {
@@ -64,21 +64,21 @@ class LinearEq {
     const sides = [
       new LinearEq(0, 1, pad),
       new LinearEq(1, 0, pad),
-      new LinearEq(0, 1, -CANVAS_OPT.height - pad),
-      new LinearEq(1, 0, -CANVAS_OPT.width - pad),
+      new LinearEq(0, 1, -Paper.height - pad),
+      new LinearEq(1, 0, -Paper.width - pad),
     ];
 
     const intsecs = sides.map((s) => {
       return this.intersectionWith(s);
     });
 
-    var diss = [];
+    let diss = [];
 
     intsecs.forEach((intsec, index) => {
       const target = index % 2 === 0 ? intsec.x : intsec.y;
-      const bound = index % 2 === 0 ? CANVAS_OPT.width : CANVAS_OPT.height;
+      const bound = index % 2 === 0 ? Paper.width : Paper.height;
 
-      var dis = undefined;
+      let dis = undefined;
       if (0 < target && target < bound) {
         dis = 0;
       } else if (target < 0) {

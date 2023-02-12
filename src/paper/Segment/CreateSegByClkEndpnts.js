@@ -11,7 +11,7 @@ function CreateSegByClkEndpnts() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    var endpoints = [];
+    let endpoints = [];
     const handleMouseClick = (event) => {
       const id = clickJudge(figures, event, TYPE.Point);
       if (

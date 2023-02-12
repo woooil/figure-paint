@@ -11,7 +11,7 @@ function CreatePointByTwoLines() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    var lines = [];
+    let lines = [];
     const handleMouseClick = (event) => {
       const element = clickJudge(figures, event, TYPE.Line);
       if (

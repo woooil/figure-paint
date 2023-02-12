@@ -23,9 +23,11 @@ class Label extends Figure {
    * Create a Label.
    * @param {DefBy}   by    - The definition method of a Label.
    * @param {Object}  props - The properties for the definition of a Label.
+   * @param {Id}      host  - The Id of the host Figure of a Label.
    */
-  constructor(by, props) {
+  constructor(by, props, host) {
     super(TYPE.Label, by, props);
+    this.host = host;
   }
 
   /**
@@ -36,8 +38,8 @@ class Label extends Figure {
    * @returns {Label}           The Label.
    */
   static byPointName(host, x, y) {
-    const props = { host, x, y };
-    return new Label(BY.PointName, props);
+    const props = { x, y };
+    return new Label(BY.PointName, props, host);
   }
 
   /**
@@ -47,8 +49,8 @@ class Label extends Figure {
    * @returns {Label}           The Label.
    */
   static bySegLength(host, text) {
-    const props = { host, text };
-    return new Label(BY.SegLength, props);
+    const props = { text };
+    return new Label(BY.SegLength, props, host);
   }
 
   /**
@@ -75,14 +77,14 @@ class Label extends Figure {
    *  @type {React.SVGProps<SVGGElement>}
    */
   get draw() {
-    var inner = <></>;
+    let inner = <></>;
     const fontStyle = {
       fontFamily: "Computer Modern",
     };
 
     switch (this.def.by) {
       case BY.PointName:
-        const host = this.figures.fig(this.def.host);
+        const host = this.figures.fig(this.host);
         const pos = host.coord;
         inner = (
           <text
@@ -98,7 +100,7 @@ class Label extends Figure {
         );
         break;
       case BY.SegLength:
-        const endCoords = this.figures.fig(this.def.host).endCoords;
+        const endCoords = this.figures.fig(this.host).endCoords;
         const control = endCoords[0].atDistance(endCoords[1], 50);
         const d = `M ${endCoords[0].x} ${endCoords[0].y} Q ${control.x} ${control.y} ${endCoords[1].x} ${endCoords[1].y}`;
         const t = 0.5;
@@ -151,6 +153,37 @@ class Label extends Figure {
     }
 
     return <g {...this.commonProps}>{inner}</g>;
+  }
+
+  /**
+   * The human-readable name based on Label's names of the Figure.
+   * @type {string}
+   */
+  get name() {
+    return this.figures.fig(this.host).name;
+  }
+
+  /**
+   * The description of the Label's definition.
+   * @type {string}
+   */
+  get description() {
+    const prefix = "A label";
+    const host = this.figures.fig(this.host).name;
+    let definition = "";
+
+    switch (this.def.by) {
+      case BY.PointName:
+        definition = `${prefix} displaying the name of point ${host}.`;
+        break;
+      case BY.SegLength:
+        definition = `${prefix} displaying the length of segment ${host}.`;
+        break;
+      default:
+        break;
+    }
+
+    return definition;
   }
 }
 

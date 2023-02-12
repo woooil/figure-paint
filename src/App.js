@@ -1,13 +1,50 @@
-import Paper from "./Paper/Paper";
-import "./style/style.css";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Canvas from "./Paper/Canvas";
+import "./style/canvas.css";
 import "./style/fonts.css";
+import "./style/figures.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#000",
+      light: "#000",
+      dark: "#fff",
+    },
+  },
+  typography: {
+    h4: {
+      fontWeight: "bold",
+    },
+    button: {
+      textTransform: "none",
+    },
+  },
+  components: {
+    MuiGrid: {
+      styleOverrides: {
+        root: {
+          margin: 0,
+          width: "100%",
+          ">.MuiGrid-item": {
+            display: "flex",
+            justifyContent: "center",
+          },
+        },
+      },
+    },
+  },
+});
 
 function App() {
   return (
-    <div>
-      <h1>Figure Paint</h1>
-      <Paper />
-    </div>
+    <ThemeProvider theme={theme}>
+      <Canvas />
+    </ThemeProvider>
   );
 }
 
