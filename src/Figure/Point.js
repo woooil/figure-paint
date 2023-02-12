@@ -24,13 +24,16 @@ Object.freeze(BY);
  * @extends Figure
  */
 class Point extends Figure {
+  #name;
+
   /**
    * Create a Point.
    * @param {DefBy}   by    - The definition method of a Point.
    * @param {Object}  props - The properties for the definition of a Point.
    */
   constructor(by, props) {
-    super(TYPE.Point, by, props, { name: Point.nextName() });
+    super(TYPE.Point, by, props);
+    this.#name = Point.nextName();
   }
 
   /**
@@ -107,11 +110,60 @@ class Point extends Figure {
   }
 
   /**
+   * The human-readable name based on Point's names of the Figure.
+   * @type {string}
+   */
+  get name() {
+    return this.#name;
+  }
+
+  /**
+   * The description of the Point's definition.
+   * @type {{name: string, definition: string}}
+   */
+  get description() {
+    const prefix = "A point";
+    const round = (x, precision = 0) => {
+      const multiplier = Math.pow(10, precision);
+      return Math.round(x * multiplier) / multiplier;
+    };
+    let definition = "";
+    switch (this.def.by) {
+      case BY.AbsCoord:
+        definition = `${prefix} at (${round(this.def.x)}, ${round(
+          this.def.y
+        )}).`;
+        break;
+      case BY.RotPnt:
+        const counterPoint = this.figures.fig(this.def.counterPoint).name;
+        const refPoint = this.figures.fig(this.def.refPoint).name;
+        definition = `${prefix} where point ${counterPoint} is rotated by ${this.def.angle}° around point ${refPoint}.`;
+        break;
+      case BY.OnSeg:
+        const segment = this.figures.fig(this.def.segment).name;
+        definition = `${prefix} that divides segment ${segment} into a ratio of ${round(
+          this.def.ratio,
+          2
+        )}.`;
+        break;
+      case BY.Intsec:
+        const fst = this.figures.fig(this.def.fstLine).name;
+        const snd = this.figures.fig(this.def.sndLine).name;
+        definition = `${prefix} of intersection of two lines ${fst} and ${snd}.`;
+        break;
+      default:
+        break;
+    }
+
+    return definition;
+  }
+
+  /**
    * The Coord of the Point.
    * @type {Coord}
    */
   get coord() {
-    var pos = {};
+    let pos = {};
     switch (this.def.by) {
       case BY.AbsCoord:
         pos = new Coord(this.def.x, this.def.y);

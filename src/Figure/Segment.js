@@ -69,6 +69,29 @@ class Segment extends Figure {
   }
 
   /**
+   * The human-readable name based on Segment's names of the Figure.
+   * @type {string}
+   */
+  get name() {
+    return `${this.figures.fig(this.def.fst).name}${
+      this.figures.fig(this.def.snd).name
+    }`;
+  }
+
+  /**
+   * The description of the Segment's definition.
+   * @type {string}
+   */
+  get description() {
+    const prefix = "A segment";
+    const fst = this.figures.fig(this.def.fst).name;
+    const snd = this.figures.fig(this.def.snd).name;
+    const definition = `${prefix} that joins two points ${fst} and ${snd}.`;
+
+    return definition;
+  }
+
+  /**
    * The length of the Segment.
    * @type {number}
    */

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import CanvasMode from "./CanvasMode";
-import Paper from "./Paper";
+import CanvasSidebar from "./Sidebar/CanvasSidebar";
+import { DrawPaper } from "./Paper";
 
 function Canvas() {
   const figures = useSelector((state) => state.figures.value);
@@ -12,8 +12,8 @@ function Canvas() {
 
   return (
     <div className="canvas">
-      <CanvasMode className="canvas-sidebar" />
-      {Paper.draw}
+      <CanvasSidebar className="canvas-sidebar" />
+      <DrawPaper figures={figures} />
     </div>
   );
 }

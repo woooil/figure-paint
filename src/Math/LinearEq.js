@@ -72,13 +72,13 @@ class LinearEq {
       return this.intersectionWith(s);
     });
 
-    var diss = [];
+    let diss = [];
 
     intsecs.forEach((intsec, index) => {
       const target = index % 2 === 0 ? intsec.x : intsec.y;
       const bound = index % 2 === 0 ? Paper.width : Paper.height;
 
-      var dis = undefined;
+      let dis = undefined;
       if (0 < target && target < bound) {
         dis = 0;
       } else if (target < 0) {

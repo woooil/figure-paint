@@ -3,7 +3,7 @@ function clickJudge(figures, event, type = undefined) {
   const paddings = elements.filter(
     (e) =>
       e.classList.contains("figure") &&
-      (type === undefined || e.classList.contains(type))
+      (type === undefined || e.classList.contains(type.toLowerCase()))
   );
   const id = paddings.map((p) => p.id);
   const figuresSelcted = id.map((i) => figures.fig(i));

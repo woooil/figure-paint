@@ -11,8 +11,8 @@ function CreateLineByClkLine() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    var refLine = undefined;
-    var point = undefined;
+    let refLine = undefined;
+    let point = undefined;
     const handleMouseClick = (event) => {
       if (refLine === undefined) {
         refLine = clickJudge(figures, event, TYPE.Line);

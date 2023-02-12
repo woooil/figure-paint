@@ -6,15 +6,13 @@ import {
   Menu,
   MenuItem,
   Grid,
-  Stack,
   Typography,
 } from "@mui/material";
-import ShapeLineOutlinedIcon from "@mui/icons-material/ShapeLineOutlined";
 
-import PointMode, { POINT_MODE } from "./Point/PointMode";
-import SegmentMode, { SEGMENT_MODE } from "./Segment/SegmentMode";
-import LabelMode, { LABEL_MODE } from "./Label/LabelMode";
-import LineMode, { LINE_MODE } from "./Line/LineMode";
+import PointMode, { POINT_MODE } from "../Point/PointMode";
+import SegmentMode, { SEGMENT_MODE } from "../Segment/SegmentMode";
+import LabelMode, { LABEL_MODE } from "../Label/LabelMode";
+import LineMode, { LINE_MODE } from "../Line/LineMode";
 
 const MODE = {
   point: "Point",
@@ -40,7 +38,7 @@ function ModeComponent(mode, subMode) {
 }
 
 function getSubModes(mode) {
-  var subModes = (mode) => {
+  let subModes = (mode) => {
     switch (mode) {
       case MODE.point:
         return POINT_MODE;
@@ -119,17 +117,6 @@ function CanvasMode(props) {
 
   return (
     <div {...props}>
-      <Stack
-        direction="row"
-        spacing={2}
-        style={{ alignItems: "center" }}
-        sx={{ mb: 3 }}
-      >
-        <Typography color="text.primary" display="inline" variant="h4">
-          Figure Paint
-        </Typography>
-        <ShapeLineOutlinedIcon />
-      </Stack>
       <Typography color="text.secondary" display="block" variant="caption">
         Current mode:
       </Typography>

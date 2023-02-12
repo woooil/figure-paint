@@ -45,14 +45,14 @@ export const figureSlice = createSlice({
      */
     remove: (state, action) => {
       const removeHelper = (value, id) => {
-        var newValue = [...value];
-        var dependants = newValue.find((f) => f.id === id).dependants;
+        let newValue = [...value];
+        let dependants = newValue.find((f) => f.id === id).dependants;
 
         while (dependants.length > 0) {
           newValue = removeHelper(newValue, dependants[0]);
           dependants = newValue.find((f) => f.id === id).dependants;
         }
-        var determinants = newValue.find((f) => f.id === id).determinants;
+        let determinants = newValue.find((f) => f.id === id).determinants;
         determinants.forEach((det) => {
           const detIndex = newValue.findIndex((f) => f.id === det);
           const figure = newValue[detIndex];

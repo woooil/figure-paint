@@ -12,7 +12,7 @@ function CreatePointOnSeg() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    var segment = undefined;
+    let segment = undefined;
     const handleMouseClick = (event) => {
       segment = clickJudge(figures, event, TYPE.Segment);
       if (segment !== undefined) {

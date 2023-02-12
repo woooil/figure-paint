@@ -12,7 +12,7 @@ function MovePointByClick() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    var id = undefined;
+    let id = undefined;
     const handleMouseClick = (event) => {
       if (id === undefined) {
         id = clickJudge(figures, event, TYPE.Point);

@@ -21,6 +21,8 @@ Object.freeze(BY);
  * @extends Figure
  */
 class Line extends Figure {
+  #name;
+
   /**
    * Create a Line.
    * @param {DefBy}   by    - The definition method of a Line.
@@ -28,6 +30,7 @@ class Line extends Figure {
    */
   constructor(by, props) {
     super(TYPE.Line, by, props);
+    this.#name = Line.nextName();
   }
 
   /**
@@ -52,6 +55,27 @@ class Line extends Figure {
     return new Line(BY.ParLn, props);
   }
 
+  static #nextName = "f";
+  /**
+   * Get the next name for a Line.
+   * @returns {string} The name of a Line.
+   */
+  static nextName() {
+    const result = Line.#nextName;
+    if (Line.#nextName === "z") {
+      Line.#nextName = "a";
+    } else if (Line.#nextName === "e") {
+      Line.#nextName = "aa";
+    } else if (Line.#nextName.at(-1) !== "z") {
+      Line.#nextName =
+        Line.#nextName.slice(0, -1) +
+        String.fromCharCode(Line.#nextName.at(-1).charCodeAt(0) + 1);
+    } else {
+      Line.#nextName = Line.#nextName.slice(0, -1) + "aa";
+    }
+    return result;
+  }
+
   /**
    *  The actual React component drawing the Line.
    *  @type {React.SVGProps<SVGRectElement>}
@@ -66,11 +90,45 @@ class Line extends Figure {
   }
 
   /**
+   * The human-readable name based on Line's names of the Figure.
+   * @type {string}
+   */
+  get name() {
+    return this.#name;
+  }
+
+  /**
+   * The description of the Line's definition.
+   * @type {string}
+   */
+  get description() {
+    const prefix = "A line";
+    let definition = "";
+
+    switch (this.def.by) {
+      case BY.TwoPnts:
+        const fst = this.figures.fig(this.def.fst).name;
+        const snd = this.figures.fig(this.def.snd).name;
+        definition = `${prefix} that passes through two points ${fst} and ${snd}.`;
+        break;
+      case BY.ParLn:
+        const refLine = this.figures.fig(this.def.refLine).name;
+        const point = this.figures.fig(this.def.point).name;
+        definition = `${prefix} that is parallel to line ${refLine} and passes through point ${point}.`;
+        break;
+      default:
+        break;
+    }
+
+    return definition;
+  }
+
+  /**
    * The linear equation of the Line.
    * @type {LinearEq}
    */
   get linearEq() {
-    var co = { a: 0, b: 0, c: 0 };
+    let co = { a: 0, b: 0, c: 0 };
     switch (this.def.by) {
       case BY.TwoPnts:
         const fst = this.figures.fig(this.def.fst).coord;

@@ -1,4 +1,3 @@
-import Figure from "../Figure/Figure";
 import Coord from "../Math/Coord";
 
 class Paper {
@@ -10,14 +9,6 @@ class Paper {
 
   static get height() {
     return Paper.element.clientHeight;
-  }
-
-  static get draw() {
-    return (
-      <svg className={Paper.className}>
-        {Figure.figures.map((figure) => figure.draw)}
-      </svg>
-    );
   }
 
   static get element() {
@@ -34,8 +25,8 @@ class Paper {
 
   static offsetOf(event) {
     const canvas = Paper.element;
-    var bound = canvas.getBoundingClientRect();
-    var html = document.documentElement;
+    let bound = canvas.getBoundingClientRect();
+    let html = document.documentElement;
 
     return new Coord(
       event.pageX - bound.left - window.pageXOffset + html.clientLeft,
@@ -44,4 +35,14 @@ class Paper {
   }
 }
 
+const DrawPaper = ({ figures }) => {
+  return (
+    <svg className={Paper.className}>
+      {figures.map((figure) => figure.draw)}
+    </svg>
+  );
+};
+
 export default Paper;
+
+export { DrawPaper };
