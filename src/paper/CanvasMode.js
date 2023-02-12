@@ -47,7 +47,7 @@ function getSubModes(mode) {
   return Object.values(getSubModesObject(mode));
 }
 
-function PaperMode() {
+function CanvasMode(props) {
   const modes = Object.values(MODE);
   const [mode, setMode] = useState(modes[0]);
 
@@ -69,7 +69,7 @@ function PaperMode() {
   };
 
   return (
-    <div>
+    <div {...props}>
       <h2>Current Mode: {mode}</h2>
       <select onChange={handleSelect} value={mode}>
         {modes.map((item) => (
@@ -90,4 +90,4 @@ function PaperMode() {
   );
 }
 
-export default PaperMode;
+export default CanvasMode;

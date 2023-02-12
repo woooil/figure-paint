@@ -2,11 +2,10 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { update, liftDep } from "../../Figure/figureSlice";
-import CANVAS_OPT from "../CANVAS_OPT";
+import Paper from "../Paper";
 import Point from "../../Figure/Point";
 import { TYPE } from "../../Figure/Figure";
 import clickJudge from "../clickJudge";
-import getOffset from "../getOffset";
 
 function MovePointByClick() {
   const figures = useSelector((state) => state.figures.value);
@@ -18,12 +17,8 @@ function MovePointByClick() {
       if (id === undefined) {
         id = clickJudge(figures, event, TYPE.Point);
       } else {
-        if (
-          document
-            .elementsFromPoint(event.clientX, event.clientY)
-            .fig(CANVAS_OPT.id) !== undefined
-        ) {
-          const coord = getOffset(event);
+        if (Paper.isClicked(event)) {
+          const coord = Paper.offsetOf(event);
           const figure = Point.byAbsCoord(coord.x, coord.y);
           const payload = {
             id: id,

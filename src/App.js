@@ -1,4 +1,4 @@
-import Paper from "./Paper/Paper";
+import Canvas from "./Paper/Canvas";
 import "./style/style.css";
 import "./style/fonts.css";
 
@@ -6,7 +6,7 @@ function App() {
   return (
     <div>
       <h1>Figure Paint</h1>
-      <Paper />
+      <Canvas />
     </div>
   );
 }

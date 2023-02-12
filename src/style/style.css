@@ -1,6 +1,6 @@
 /* reference: https://stackoverflow.com/a/4407335 */
 .noselect,
-.label {
+.Label {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -12,4 +12,12 @@
 
 .Label {
   font-family: "Computer Modern";
+}
+
+.canvas {
+  display: flex;
+}
+
+.canvas-sidebar {
+  width: 300px;
 }
