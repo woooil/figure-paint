@@ -14,15 +14,15 @@ import { store } from "../store";
  */
 const TYPE = {
   /** @type {FigType} Point type. */
-  Point: "Point",
+  Point: "point",
   /** @type {FigType} Line type. */
-  Line: "Line",
+  Line: "line",
   /** @type {FigType} Segment type. */
-  Segment: "Segment",
+  Segment: "segment",
   /** @type {FigType} Label type. */
-  Label: "Label",
+  Label: "label",
   /** @type {FigType} Mark type. */
-  Mark: "Mark",
+  Mark: "mark",
 };
 Object.freeze(TYPE);
 

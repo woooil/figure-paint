@@ -1,6 +1,6 @@
 /* reference: https://stackoverflow.com/a/4407335 */
 .noselect,
-.Label {
+.label {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -10,6 +10,6 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-.Label {
+.label {
   font-family: "Computer Modern";
 }
