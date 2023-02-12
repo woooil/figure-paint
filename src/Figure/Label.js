@@ -117,7 +117,7 @@ class Label extends Figure {
         inner = (
           <>
             <defs>
-              <mask id="cut-off">
+              <mask id={`cut-off-${this.id}`}>
                 <path
                   fill="none"
                   d={d}
@@ -140,7 +140,7 @@ class Label extends Figure {
               strokeWidth="1"
               strokeDasharray="5,4"
               fill="transparent"
-              mask="url(#cut-off)"
+              mask={`url(#cut-off-${this.id})`}
             />
             <text x={x - textDim.width / 2} y={y}>
               {this.def.text}
