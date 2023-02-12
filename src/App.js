@@ -17,6 +17,9 @@ const theme = createTheme({
     },
   },
   typography: {
+    h4: {
+      fontWeight: "bold",
+    },
     button: {
       textTransform: "none",
     },

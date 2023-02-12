@@ -97,7 +97,11 @@ function ModeMenu({ mode, setMode }) {
         }}
       >
         {subModes.map((m, index) => (
-          <MenuItem onClick={() => handleMenuItemClick(m)} key={index}>
+          <MenuItem
+            onClick={() => handleMenuItemClick(m)}
+            key={index}
+            sx={{ typography: "body2" }}
+          >
             {m}
           </MenuItem>
         ))}
