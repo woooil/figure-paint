@@ -12,8 +12,8 @@ function Canvas() {
 
   return (
     <div className="canvas">
-      {Paper.draw}
       <CanvasMode className="canvas-sidebar" />
+      {Paper.draw}
     </div>
   );
 }

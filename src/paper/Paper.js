@@ -1,27 +1,21 @@
-import { store } from "../store";
+import Figure from "../Figure/Figure";
 import Coord from "../Math/Coord";
 
 class Paper {
   static className = "paper";
-  static width = 600;
-  static height = 600;
 
-  static #style = {
-    backgroundColor: "gray",
-    width: `${Paper.width}px`,
-    height: `${Paper.height}.px`,
-    overflow: "hidden",
-    margin: "10px",
-  };
+  static get width() {
+    return Paper.element.clientWidth;
+  }
 
-  static get figures() {
-    return store.getState().figures.value;
+  static get height() {
+    return Paper.element.clientHeight;
   }
 
   static get draw() {
     return (
-      <svg className={Paper.className} id="canvas" style={Paper.#style}>
-        {Paper.figures.map((figure) => figure.draw)}
+      <svg className={Paper.className}>
+        {Figure.figures.map((figure) => figure.draw)}
       </svg>
     );
   }

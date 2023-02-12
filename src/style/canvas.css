@@ -1,0 +1,27 @@
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.canvas {
+  display: flex;
+  height: 100%;
+  align-items: stretch;
+}
+
+.canvas-sidebar {
+  width: 250px;
+  padding: 20px;
+  background-color: lightgray;
+}
+
+.canvas-sidebar > select {
+  width: 100%;
+}
+
+.paper {
+  flex: 1;
+}

@@ -79,6 +79,13 @@ class Figure {
   get figures() {
     return store.getState().figures.value;
   }
+  /**
+   * The list of all Figures stored in the store.
+   * @type {Figure[]}
+   */
+  static get figures() {
+    return store.getState().figures.value;
+  }
 
   /**
    *  The actual React component drawing the Figure.

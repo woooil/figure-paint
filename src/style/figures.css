@@ -13,11 +13,3 @@
 .Label {
   font-family: "Computer Modern";
 }
-
-.canvas {
-  display: flex;
-}
-
-.canvas-sidebar {
-  width: 300px;
-}

@@ -1,14 +1,10 @@
 import Canvas from "./Paper/Canvas";
-import "./style/style.css";
+import "./style/canvas.css";
 import "./style/fonts.css";
+import "./style/figures.css";
 
 function App() {
-  return (
-    <div>
-      <h1>Figure Paint</h1>
-      <Canvas />
-    </div>
-  );
+  return <Canvas />;
 }
 
 export default App;
