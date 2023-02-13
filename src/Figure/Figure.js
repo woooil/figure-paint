@@ -33,13 +33,23 @@ class Figure {
    * @param {FigType} type            - The type of a Figure.
    * @param {DefBy}   by              - The definition method of a Figure.
    * @param {Object}  props           - The properties for the definition of a Figure.
+   * @param {Object}  [encodedObj={}] - The encoded object to decode and directly assign to a Figure. It has the highest priority.
    */
-  constructor(type, by, props) {
-    this.#id = uuidv4().slice(-4);
-    this.type = type;
-    this.def = { by, ...props };
-    this.determinants = [];
-    this.dependants = [];
+  constructor(type, by, props, encodedObj = {}) {
+    const {
+      id: encodedId,
+      type: encodedType,
+      def: encodedDef,
+      determinants: encodedDeterminants,
+      dependants: encodedDependants,
+      ...extra
+    } = encodedObj;
+    this.#id = encodedId || uuidv4().slice(-4);
+    this.type = encodedType || type;
+    this.def = encodedDef || { by, ...props };
+    this.determinants = encodedDeterminants || [];
+    this.dependants = encodedDependants || [];
+    Object.assign(this, extra);
   }
 
   /**
@@ -85,7 +95,7 @@ class Figure {
   }
 
   /**
-   * The human-readable name based on Foint's names of the Figure.
+   * The human-readable name based on Points' names of the Figure.
    * @type {string}
    */
   get name() {

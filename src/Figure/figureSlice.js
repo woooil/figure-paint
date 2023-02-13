@@ -31,7 +31,7 @@ export const figureSlice = createSlice({
      * @param {Figure[]}  action.payload  - The list of Figures to append.
      */
     append: (state, action) => {
-      state.value.concat(action.payload);
+      state.value = state.value.concat(action.payload);
     },
 
     /**

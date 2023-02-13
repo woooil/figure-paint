@@ -62,22 +62,20 @@ function SaveMenu() {
 function FileMenu(props) {
   const dispatch = useDispatch();
 
-  // const handleLoadClick = () => {
-  //   const fileInput = document.createElement("input");
-  //   fileInput.type = "file";
-  //   fileInput.accept = ".fpd";
-  //   fileInput.onchange = function () {
-  //     const file = fileInput.files[0];
-  //     const reader = new FileReader();
-  //     reader.onload = function () {
-  //       const data = JSON.parse(reader.result);
-  //       dispatch(append(data.figures));
-  //       console.log("loaded succesfully");
-  //     };
-  //     reader.readAsText(file);
-  //   };
-  //   fileInput.click();
-  // };
+  const handleLoadClick = () => {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = ".fpd";
+    fileInput.onchange = function () {
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      reader.onload = function () {
+        dispatch(append(Paper.readRaw(reader.result)));
+      };
+      reader.readAsText(file);
+    };
+    fileInput.click();
+  };
 
   return (
     <div {...props}>
@@ -85,9 +83,9 @@ function FileMenu(props) {
         File:
       </Typography>
       <Grid container>
-        {/* <Grid item xs={6}>
+        <Grid item xs={6}>
           <Button onClick={handleLoadClick}>Load</Button>
-        </Grid> */}
+        </Grid>
         <Grid item xs={6}>
           <SaveMenu />
         </Grid>

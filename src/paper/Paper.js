@@ -1,5 +1,6 @@
 import { store } from "../store";
 import Coord from "../Math/Coord";
+import figureCoder from "../Figure/figureCoder";
 
 class Paper {
   static className = "paper";
@@ -48,7 +49,7 @@ class Paper {
     image.onload = function () {
       ctx.drawImage(image, 0, 0);
       const a = document.createElement("a");
-      a.download = "image.png";
+      a.download = "untitled.png";
       a.href = canvas.toDataURL("image/png");
       a.click();
     };
@@ -64,7 +65,7 @@ class Paper {
     });
     const url = URL.createObjectURL(svgBlob);
     const a = document.createElement("a");
-    a.download = "image.svg";
+    a.download = "untitled.svg";
     a.href = url;
     a.click();
   }
@@ -72,7 +73,7 @@ class Paper {
   static saveRaw() {
     const json = {
       date: Date.now(),
-      figures: store.getState().figures.value,
+      figures: store.getState().figures.value.map((f) => figureCoder.encode(f)),
     };
     const data = JSON.stringify(json);
     const fileName = "untitled.fpd";
@@ -81,6 +82,11 @@ class Paper {
     a.href = URL.createObjectURL(blob);
     a.download = fileName;
     a.click();
+  }
+
+  static readRaw(raw) {
+    const data = JSON.parse(raw);
+    return data.figures.map((f) => figureCoder.decode(f));
   }
 }
 

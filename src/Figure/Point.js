@@ -24,16 +24,15 @@ Object.freeze(BY);
  * @extends Figure
  */
 class Point extends Figure {
-  #name;
-
   /**
    * Create a Point.
    * @param {DefBy}   by    - The definition method of a Point.
    * @param {Object}  props - The properties for the definition of a Point.
+   * @param {Object}  [encodedObj={}] - The encoded object to decode and directly assign to a Point. It has the highest priority.
    */
-  constructor(by, props) {
-    super(TYPE.Point, by, props);
-    this.#name = Point.nextName();
+  constructor(by, props, encodedObj = {}) {
+    super(TYPE.Point, by, props, encodedObj);
+    this.pointName = encodedObj.pointName || Point.nextName();
   }
 
   /**
@@ -110,11 +109,11 @@ class Point extends Figure {
   }
 
   /**
-   * The human-readable name based on Point's names of the Figure.
+   * The human-readable name of the Point.
    * @type {string}
    */
   get name() {
-    return this.#name;
+    return this.pointName;
   }
 
   /**

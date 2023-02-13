@@ -24,10 +24,11 @@ class Label extends Figure {
    * @param {DefBy}   by    - The definition method of a Label.
    * @param {Object}  props - The properties for the definition of a Label.
    * @param {Id}      host  - The Id of the host Figure of a Label.
+   * @param {Object}  [encodedObj={}] - The encoded object to decode and directly assign to a Label. It has the highest priority.
    */
-  constructor(by, props, host) {
-    super(TYPE.Label, by, props);
-    this.host = host;
+  constructor(by, props, host, encodedObj = {}) {
+    super(TYPE.Label, by, props, encodedObj);
+    this.host = encodedObj.host || host;
   }
 
   /**
@@ -156,7 +157,7 @@ class Label extends Figure {
   }
 
   /**
-   * The human-readable name based on Label's names of the Figure.
+   * The human-readable name based on Points' names of the Label.
    * @type {string}
    */
   get name() {

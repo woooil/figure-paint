@@ -21,16 +21,15 @@ Object.freeze(BY);
  * @extends Figure
  */
 class Line extends Figure {
-  #name;
-
   /**
    * Create a Line.
    * @param {DefBy}   by    - The definition method of a Line.
    * @param {Object}  props - The properties for the definition of a Line.
+   * @param {Object}  [encodedObj={}] - The encoded object to decode and directly assign to a Line. It has the highest priority.
    */
-  constructor(by, props) {
-    super(TYPE.Line, by, props);
-    this.#name = Line.nextName();
+  constructor(by, props, encodedObj = {}) {
+    super(TYPE.Line, by, props, encodedObj);
+    this.lineName = encodedObj.lineName || Line.nextName();
   }
 
   /**
@@ -90,11 +89,11 @@ class Line extends Figure {
   }
 
   /**
-   * The human-readable name based on Line's names of the Figure.
+   * The human-readable name based on Points' names of the Line.
    * @type {string}
    */
   get name() {
-    return this.#name;
+    return this.lineName;
   }
 
   /**
