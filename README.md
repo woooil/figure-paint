@@ -30,6 +30,11 @@ You can [try it now!](https://woooil.github.io/figure-paint/)
   - Load
     - Load `.fpd` file so that you can continue drawing from your previous work.
 
+## Version
+
+- v1.0.0 (2022.09.13)
+  - The first relase
+
 ## License
 
 Not yet determined
