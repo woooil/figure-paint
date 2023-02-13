@@ -76,8 +76,8 @@ function ModeMenu({ mode, setMode }) {
   return (
     <>
       <Button
-        id="basic-button"
-        aria-controls={open ? "basic-menu" : undefined}
+        id={`basic-button-${mode}`}
+        aria-controls={open ? `basic-menu-${mode}` : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
@@ -86,7 +86,7 @@ function ModeMenu({ mode, setMode }) {
         {mode}
       </Button>
       <Menu
-        id="basic-menu"
+        id={`basic-menu-${mode}`}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}

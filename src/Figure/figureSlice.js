@@ -27,6 +27,14 @@ export const figureSlice = createSlice({
     },
 
     /**
+     * Append the given list of Figures to the existing store.
+     * @param {Figure[]}  action.payload  - The list of Figures to append.
+     */
+    append: (state, action) => {
+      state.value.concat(action.payload);
+    },
+
+    /**
      * Update some properties of an existing Figure with the given data.
      * @param {Id}      action.payload.id   - The id of the Figure to update.
      * @param {Object}  action.payload.with - The data to update the Figure with. e.g. { def: { ... } }
@@ -116,6 +124,7 @@ export const figureSlice = createSlice({
   },
 });
 
-export const { create, update, remove, setDep, liftDep } = figureSlice.actions;
+export const { create, append, update, remove, setDep, liftDep } =
+  figureSlice.actions;
 
 export default figureSlice.reducer;

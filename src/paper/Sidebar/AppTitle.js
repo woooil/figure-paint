@@ -1,6 +1,5 @@
-import { Stack, Typography, IconButton } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import ShapeLineOutlinedIcon from "@mui/icons-material/ShapeLineOutlined";
-import Paper from "../Paper";
 
 function AppTitle(props) {
   return (
@@ -14,9 +13,7 @@ function AppTitle(props) {
       <Typography color="text.primary" display="inline" variant="h4">
         Figure Paint
       </Typography>
-      <IconButton onClick={Paper.save}>
-        <ShapeLineOutlinedIcon />
-      </IconButton>
+      <ShapeLineOutlinedIcon />
     </Stack>
   );
 }

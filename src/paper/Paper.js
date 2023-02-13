@@ -1,3 +1,4 @@
+import { store } from "../store";
 import Coord from "../Math/Coord";
 
 class Paper {
@@ -34,13 +35,15 @@ class Paper {
     );
   }
 
-  static save() {
+  static saveAsPng() {
     const svgElement = Paper.element;
     const svgData = new XMLSerializer().serializeToString(svgElement);
     const canvas = document.createElement("canvas");
-    canvas.width = svgElement.width.baseVal.value;
-    canvas.height = svgElement.height.baseVal.value;
+    const multiplier = 2;
+    canvas.width = svgElement.width.baseVal.value * multiplier;
+    canvas.height = svgElement.height.baseVal.value * multiplier;
     const ctx = canvas.getContext("2d");
+    ctx.scale(multiplier, multiplier);
     const image = new Image();
     image.onload = function () {
       ctx.drawImage(image, 0, 0);
@@ -51,6 +54,33 @@ class Paper {
     };
     image.src =
       "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgData);
+  }
+
+  static saveAsSvg() {
+    const svgElement = Paper.element;
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+    const svgBlob = new Blob([svgData], {
+      type: "image/svg+xml;charset=utf-8",
+    });
+    const url = URL.createObjectURL(svgBlob);
+    const a = document.createElement("a");
+    a.download = "image.svg";
+    a.href = url;
+    a.click();
+  }
+
+  static saveRaw() {
+    const json = {
+      date: Date.now(),
+      figures: store.getState().figures.value,
+    };
+    const data = JSON.stringify(json);
+    const fileName = "untitled.fpd";
+    const a = document.createElement("a");
+    const blob = new Blob([data], { type: "text/plain" });
+    a.href = URL.createObjectURL(blob);
+    a.download = fileName;
+    a.click();
   }
 }
 
