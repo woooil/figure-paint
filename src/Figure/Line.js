@@ -29,7 +29,6 @@ class Line extends Figure {
    */
   constructor(by, props, encodedObj = {}) {
     super(TYPE.Line, by, props, encodedObj);
-    this.lineName = encodedObj.lineName || Line.nextName();
   }
 
   /**
@@ -54,27 +53,6 @@ class Line extends Figure {
     return new Line(BY.ParLn, props);
   }
 
-  static #nextName = "f";
-  /**
-   * Get the next name for a Line.
-   * @returns {string} The name of a Line.
-   */
-  static nextName() {
-    const result = Line.#nextName;
-    if (Line.#nextName === "z") {
-      Line.#nextName = "a";
-    } else if (Line.#nextName === "e") {
-      Line.#nextName = "aa";
-    } else if (Line.#nextName.at(-1) !== "z") {
-      Line.#nextName =
-        Line.#nextName.slice(0, -1) +
-        String.fromCharCode(Line.#nextName.at(-1).charCodeAt(0) + 1);
-    } else {
-      Line.#nextName = Line.#nextName.slice(0, -1) + "aa";
-    }
-    return result;
-  }
-
   /**
    *  The actual React component drawing the Line.
    *  @type {React.SVGProps<SVGRectElement>}
@@ -93,7 +71,31 @@ class Line extends Figure {
    * @type {string}
    */
   get name() {
-    return this.lineName;
+    const numberToName = (num) => {
+      var generatedName = "";
+      var currentNum = num;
+      const a = "a".charCodeAt(0);
+      const f = "f".charCodeAt(0);
+      const numberOfAlphabet = "z".charCodeAt(0) - a + 1;
+      if (currentNum <= numberOfAlphabet) {
+        generatedName = String.fromCharCode(
+          a + ((currentNum + f - a - 1) % numberOfAlphabet)
+        );
+      } else {
+        while (currentNum > 0) {
+          generatedName =
+            String.fromCharCode(a + ((currentNum - 1) % numberOfAlphabet)) +
+            generatedName;
+          currentNum = parseInt((currentNum - 1) / numberOfAlphabet);
+        }
+      }
+      return generatedName;
+    };
+    const number =
+      this.figures
+        .filter((f) => f.type === TYPE.Line)
+        .findIndex((f) => f.id === this.id) + 1;
+    return numberToName(number);
   }
 
   /**

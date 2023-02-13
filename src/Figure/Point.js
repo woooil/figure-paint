@@ -32,7 +32,6 @@ class Point extends Figure {
    */
   constructor(by, props, encodedObj = {}) {
     super(TYPE.Point, by, props, encodedObj);
-    this.pointName = encodedObj.pointName || Point.nextName();
   }
 
   /**
@@ -80,23 +79,6 @@ class Point extends Figure {
     return new Point(BY.Intsec, props);
   }
 
-  static #nextName = "A";
-  /**
-   * Get the next name for a Point.
-   * @returns {string} The name of a Point.
-   */
-  static nextName() {
-    const result = Point.#nextName;
-    if (Point.#nextName.at(-1) !== "Z") {
-      Point.#nextName =
-        Point.#nextName.slice(0, -1) +
-        String.fromCharCode(Point.#nextName.at(-1).charCodeAt(0) + 1);
-    } else {
-      Point.#nextName = Point.#nextName.slice(0, -1) + "AA";
-    }
-    return result;
-  }
-
   /**
    *  The actual React component drawing the Point.
    *  @type {React.SVGProps<SVGCircleElement>}
@@ -113,7 +95,24 @@ class Point extends Figure {
    * @type {string}
    */
   get name() {
-    return this.pointName;
+    const numberToName = (num) => {
+      var generatedName = "";
+      var currentNum = num;
+      const A = "A".charCodeAt(0);
+      const numberOfAlphabet = "Z".charCodeAt(0) - A + 1;
+      while (currentNum > 0) {
+        generatedName =
+          String.fromCharCode(A + ((currentNum - 1) % numberOfAlphabet)) +
+          generatedName;
+        currentNum = parseInt((currentNum - 1) / numberOfAlphabet);
+      }
+      return generatedName;
+    };
+    const number =
+      this.figures
+        .filter((f) => f.type === TYPE.Point)
+        .findIndex((f) => f.id === this.id) + 1;
+    return numberToName(number);
   }
 
   /**
