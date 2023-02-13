@@ -21,16 +21,14 @@ Object.freeze(BY);
  * @extends Figure
  */
 class Line extends Figure {
-  #name;
-
   /**
    * Create a Line.
    * @param {DefBy}   by    - The definition method of a Line.
    * @param {Object}  props - The properties for the definition of a Line.
+   * @param {Object}  [encodedObj={}] - The encoded object to decode and directly assign to a Line. It has the highest priority.
    */
-  constructor(by, props) {
-    super(TYPE.Line, by, props);
-    this.#name = Line.nextName();
+  constructor(by, props, encodedObj = {}) {
+    super(TYPE.Line, by, props, encodedObj);
   }
 
   /**
@@ -55,27 +53,6 @@ class Line extends Figure {
     return new Line(BY.ParLn, props);
   }
 
-  static #nextName = "f";
-  /**
-   * Get the next name for a Line.
-   * @returns {string} The name of a Line.
-   */
-  static nextName() {
-    const result = Line.#nextName;
-    if (Line.#nextName === "z") {
-      Line.#nextName = "a";
-    } else if (Line.#nextName === "e") {
-      Line.#nextName = "aa";
-    } else if (Line.#nextName.at(-1) !== "z") {
-      Line.#nextName =
-        Line.#nextName.slice(0, -1) +
-        String.fromCharCode(Line.#nextName.at(-1).charCodeAt(0) + 1);
-    } else {
-      Line.#nextName = Line.#nextName.slice(0, -1) + "aa";
-    }
-    return result;
-  }
-
   /**
    *  The actual React component drawing the Line.
    *  @type {React.SVGProps<SVGRectElement>}
@@ -90,11 +67,35 @@ class Line extends Figure {
   }
 
   /**
-   * The human-readable name based on Line's names of the Figure.
+   * The human-readable name based on Points' names of the Line.
    * @type {string}
    */
   get name() {
-    return this.#name;
+    const numberToName = (num) => {
+      var generatedName = "";
+      var currentNum = num;
+      const a = "a".charCodeAt(0);
+      const f = "f".charCodeAt(0);
+      const numberOfAlphabet = "z".charCodeAt(0) - a + 1;
+      if (currentNum <= numberOfAlphabet) {
+        generatedName = String.fromCharCode(
+          a + ((currentNum + f - a - 1) % numberOfAlphabet)
+        );
+      } else {
+        while (currentNum > 0) {
+          generatedName =
+            String.fromCharCode(a + ((currentNum - 1) % numberOfAlphabet)) +
+            generatedName;
+          currentNum = parseInt((currentNum - 1) / numberOfAlphabet);
+        }
+      }
+      return generatedName;
+    };
+    const number =
+      this.figures
+        .filter((f) => f.type === TYPE.Line)
+        .findIndex((f) => f.id === this.id) + 1;
+    return numberToName(number);
   }
 
   /**

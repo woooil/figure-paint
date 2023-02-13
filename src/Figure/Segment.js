@@ -21,9 +21,10 @@ class Segment extends Figure {
    * Create a Segment.
    * @param {DefBy}   by    - The definition method of a Segment.
    * @param {Object}  props - The properties for the definition of a Segment.
+   * @param {Object}  [encodedObj={}] - The encoded object to decode and directly assign to a Segment. It has the highest priority.
    */
-  constructor(by, props) {
-    super(TYPE.Segment, by, props);
+  constructor(by, props, encodedObj = {}) {
+    super(TYPE.Segment, by, props, encodedObj);
   }
 
   /**
@@ -69,7 +70,7 @@ class Segment extends Figure {
   }
 
   /**
-   * The human-readable name based on Segment's names of the Figure.
+   * The human-readable name based on Points' names of the Segment.
    * @type {string}
    */
   get name() {

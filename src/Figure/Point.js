@@ -24,16 +24,14 @@ Object.freeze(BY);
  * @extends Figure
  */
 class Point extends Figure {
-  #name;
-
   /**
    * Create a Point.
    * @param {DefBy}   by    - The definition method of a Point.
    * @param {Object}  props - The properties for the definition of a Point.
+   * @param {Object}  [encodedObj={}] - The encoded object to decode and directly assign to a Point. It has the highest priority.
    */
-  constructor(by, props) {
-    super(TYPE.Point, by, props);
-    this.#name = Point.nextName();
+  constructor(by, props, encodedObj = {}) {
+    super(TYPE.Point, by, props, encodedObj);
   }
 
   /**
@@ -81,23 +79,6 @@ class Point extends Figure {
     return new Point(BY.Intsec, props);
   }
 
-  static #nextName = "A";
-  /**
-   * Get the next name for a Point.
-   * @returns {string} The name of a Point.
-   */
-  static nextName() {
-    const result = Point.#nextName;
-    if (Point.#nextName.at(-1) !== "Z") {
-      Point.#nextName =
-        Point.#nextName.slice(0, -1) +
-        String.fromCharCode(Point.#nextName.at(-1).charCodeAt(0) + 1);
-    } else {
-      Point.#nextName = Point.#nextName.slice(0, -1) + "AA";
-    }
-    return result;
-  }
-
   /**
    *  The actual React component drawing the Point.
    *  @type {React.SVGProps<SVGCircleElement>}
@@ -110,11 +91,28 @@ class Point extends Figure {
   }
 
   /**
-   * The human-readable name based on Point's names of the Figure.
+   * The human-readable name of the Point.
    * @type {string}
    */
   get name() {
-    return this.#name;
+    const numberToName = (num) => {
+      var generatedName = "";
+      var currentNum = num;
+      const A = "A".charCodeAt(0);
+      const numberOfAlphabet = "Z".charCodeAt(0) - A + 1;
+      while (currentNum > 0) {
+        generatedName =
+          String.fromCharCode(A + ((currentNum - 1) % numberOfAlphabet)) +
+          generatedName;
+        currentNum = parseInt((currentNum - 1) / numberOfAlphabet);
+      }
+      return generatedName;
+    };
+    const number =
+      this.figures
+        .filter((f) => f.type === TYPE.Point)
+        .findIndex((f) => f.id === this.id) + 1;
+    return numberToName(number);
   }
 
   /**
