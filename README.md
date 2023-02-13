@@ -33,7 +33,7 @@ You can [try it now!](https://woooil.github.io/figure-paint/)
 ## Version
 
 - v1.0.0 (2022.09.13)
-  - The first relase
+  - The first release
 
 ## License
 
