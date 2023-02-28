@@ -5,6 +5,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 const initialState = {
   /** @type {Figure[]} The list of Figures. */
   value: [],
+  hints: [],
 };
 
 // eslint-disable-next-line
@@ -121,10 +122,33 @@ export const figureSlice = createSlice({
         1
       );
     },
+
+    /**
+     * Create a new hint or update some properties of a hint with the given data or delete a hint.
+     * @param {Id}      action.payload.id   - The id of the Figure to update.
+     * @param {Figure|Object|undefined}  action.payload.with - The data to update the Figure with. e.g. { def: { ... } }
+     */
+    hinter: (state, action) => {
+      const index = state.hints.findIndex((f) => f.id === action.payload.id);
+      if (index < 0) {
+        // Create a new hint
+        action.payload.with.isHint = true;
+        state.hints.push(action.payload.with);
+      } else if (action.payload.with === undefined) {
+        // Remove an existing hint
+        state.hints.splice(index, 1);
+      } else {
+        // Update an existing hint
+        const figure = current(state.hints)[index];
+        Object.assign(figure, action.payload.with);
+        state.hints.splice(index, 1);
+        state.hints.splice(index, 0, figure);
+      }
+    },
   },
 });
 
-export const { create, append, update, remove, setDep, liftDep } =
+export const { create, append, update, remove, setDep, liftDep, hinter } =
   figureSlice.actions;
 
 export default figureSlice.reducer;

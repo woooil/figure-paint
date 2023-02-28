@@ -94,6 +94,7 @@ class Paper {
 
 const DrawPaper = () => {
   const figures = useSelector((state) => state.figures.value);
+  const hints = useSelector((state) => state.figures.hints);
 
   useEffect(() => {
     console.log("figure updated:", figures);
@@ -102,6 +103,7 @@ const DrawPaper = () => {
   return (
     <svg className={Paper.className}>
       {figures.map((figure) => figure.draw)}
+      {hints.map((hint) => hint.draw)}
     </svg>
   );
 };
