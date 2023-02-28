@@ -45,6 +45,7 @@ class Segment extends Figure {
    * @returns {Object}          The attributes.
    */
   static attr(fstCoord, sndCoord) {
+    console.log("fstCoord", fstCoord); //TODO - Remove before debugging
     const lineWidth = 2;
     const len = fstCoord.distanceFrom(sndCoord);
     const angle =

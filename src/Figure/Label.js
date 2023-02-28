@@ -81,23 +81,28 @@ class Label extends Figure {
     let inner = <></>;
     const fontStyle = {
       fontFamily: "Computer Modern",
+      fontSize: 16,
     };
+
+    const textElem = (text, x, y) => (
+      <text
+        x={x}
+        y={y}
+        fontFamily={fontStyle.fontFamily}
+        fontSize={fontStyle.fontSize}
+      >
+        {text}
+      </text>
+    );
 
     switch (this.def.by) {
       case BY.PointName:
         const host = this.figures.fig(this.host);
         const pos = host.coord;
-        inner = (
-          <text
-            x={
-              pos.x +
-              this.def.x -
-              Label.#textDim(host.name, fontStyle).width / 2
-            }
-            y={pos.y + this.def.y}
-          >
-            {host.name}
-          </text>
+        inner = textElem(
+          host.name,
+          pos.x + this.def.x - Label.#textDim(host.name, fontStyle).width / 2,
+          pos.y + this.def.y
         );
         break;
       case BY.SegLength:
@@ -143,9 +148,7 @@ class Label extends Figure {
               fill="transparent"
               mask={`url(#cut-off-${this.id})`}
             />
-            <text x={x - textDim.width / 2} y={y}>
-              {this.def.text}
-            </text>
+            {textElem(this.def.text, x - textDim.width / 2, y)}
           </>
         );
         break;
