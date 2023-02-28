@@ -1,3 +1,4 @@
+import { Canvg } from "canvg";
 import { store } from "../store";
 import Coord from "../Math/Coord";
 import figureCoder from "../Figure/figureCoder";
@@ -36,25 +37,23 @@ class Paper {
     );
   }
 
-  static saveAsPng() {
+  static async saveAsPng() {
     const svgElement = Paper.element;
     const svgData = new XMLSerializer().serializeToString(svgElement);
+    const scaleFactor = 3;
     const canvas = document.createElement("canvas");
-    const multiplier = 2;
-    canvas.width = svgElement.width.baseVal.value * multiplier;
-    canvas.height = svgElement.height.baseVal.value * multiplier;
+    canvas.width = svgElement.width.baseVal.value * scaleFactor;
+    canvas.height = svgElement.height.baseVal.value * scaleFactor;
+    canvas.style.width = `${svgElement.width.baseVal.value}px`;
+    canvas.style.height = `${svgElement.height.baseVal.value}px`;
     const ctx = canvas.getContext("2d");
-    ctx.scale(multiplier, multiplier);
-    const image = new Image();
-    image.onload = function () {
-      ctx.drawImage(image, 0, 0);
-      const a = document.createElement("a");
-      a.download = "untitled.png";
-      a.href = canvas.toDataURL("image/png");
-      a.click();
-    };
-    image.src =
-      "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgData);
+    ctx.scale(scaleFactor, scaleFactor);
+    const v = await Canvg.from(ctx, svgData);
+    await v.render();
+    const link = document.createElement("a");
+    link.download = "untitled.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
   }
 
   static saveAsSvg() {
