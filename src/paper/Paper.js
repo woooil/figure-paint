@@ -103,7 +103,19 @@ const DrawPaper = () => {
   return (
     <svg className={Paper.className}>
       {figures.map((figure) => figure.draw)}
-      {hints.map((hint) => hint.draw)}
+      <defs>
+        <clipPath id={`hint-clipping`}>
+          {hints.map((hint) => hint.draw)}
+        </clipPath>
+      </defs>
+      <rect
+        x={0}
+        y={0}
+        width={1000}
+        height={1000}
+        clipPath={`url(#hint-clipping)`}
+        className="hintLayer"
+      />
     </svg>
   );
 };

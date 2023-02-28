@@ -10,26 +10,11 @@ function CreatePointByClick() {
 
   useEffect(() => {
     const hint = Point.byAbsCoord(0, 0);
-    // dispatch(create(hint));
-    // dispatch(
-    //   update({
-    //     id: hint.id,
-    //     with: {
-    //       isHint: true,
-    //     },
-    //   })
-    // );
     dispatch(hinter({ id: hint.id, with: hint }));
     const handleMouseMove = (event) => {
       if (Paper.isUnder(event)) {
         const coord = Paper.offsetOf(event);
         const def = Point.byAbsCoord(coord.x, coord.y).def;
-        // dispatch(
-        //   update({
-        //     id: hint.id,
-        //     with: { def: def },
-        //   })
-        // );
         dispatch(hinter({ id: hint.id, with: { def: def } }));
       }
     };
@@ -43,7 +28,6 @@ function CreatePointByClick() {
     window.addEventListener("click", handleMouseClick);
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
-      // dispatch(remove(hint.id));
       dispatch(hinter({ id: hint.id, with: undefined }));
       window.removeEventListener("click", handleMouseClick);
       window.removeEventListener("mousemove", handleMouseMove);

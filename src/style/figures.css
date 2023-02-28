@@ -14,18 +14,6 @@
   font-family: "Computer Modern";
 }
 
-.hint {
-  animation: blink 2s ease-in-out infinite;
-}
-
-@keyframes blink {
-  0% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 0.1;
-  }
-  100% {
-    opacity: 0.3;
-  }
+.hintLayer {
+  fill: #aaa;
 }
