@@ -34,6 +34,9 @@ You can [try it now!](https://woooil.github.io/figure-paint/)
 
 - v1.0.0 (2022.09.13)
   - The first release
+- v1.0.1 (2023.02.28)
+  - Fix the following bug:
+    - `Save as PNG` produces an empty image file in Safari
 
 ## License
 
