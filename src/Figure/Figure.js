@@ -72,7 +72,9 @@ class Figure {
       style: {
         display: this.visible === false ? "none" : "",
       },
-      className: `${this.type.toLowerCase()} figure`,
+      className: `${this.type.toLowerCase()} figure ${
+        this.isHint === true ? "hint" : ""
+      }`,
       id: this.id,
       key: this.id,
     };

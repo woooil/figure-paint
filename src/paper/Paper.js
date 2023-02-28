@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { store } from "../store";
 import Coord from "../Math/Coord";
 import figureCoder from "../Figure/figureCoder";
@@ -17,7 +19,7 @@ class Paper {
     return document.getElementsByClassName(Paper.className)[0];
   }
 
-  static isClicked(event) {
+  static isUnder(event) {
     return (
       document
         .elementsFromPoint(event.clientX, event.clientY)
@@ -90,7 +92,13 @@ class Paper {
   }
 }
 
-const DrawPaper = ({ figures }) => {
+const DrawPaper = () => {
+  const figures = useSelector((state) => state.figures.value);
+
+  useEffect(() => {
+    console.log("figure updated:", figures);
+  }, [figures]);
+
   return (
     <svg className={Paper.className}>
       {figures.map((figure) => figure.draw)}
