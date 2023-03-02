@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { store } from "../../store";
 
 import { create, setDep, hinter } from "../../Figure/figureSlice";
 import { TYPE } from "../../Figure/Figure";
 import Segment from "../../Figure/Segment";
 import Figure from "../../Figure/Figure";
+import Paper from "../Paper";
 import clickJudge from "../clickJudge";
 
 function CreateSegByClkEndpnts() {
@@ -19,7 +19,7 @@ function CreateSegByClkEndpnts() {
       const id = clickJudge(event, TYPE.Point);
       if (id !== undefined) {
         if (activeId !== id) {
-          const point = store.getState().figures.value.fig(id);
+          const point = Paper.figures.fig(id);
           dispatch(hinter({ id: hints[endpoints.length], with: point }));
           if (endpoints.length > 0) {
             const segment = Segment.byEndpnts(endpoints[0], id);
@@ -59,6 +59,9 @@ function CreateSegByClkEndpnts() {
     return () => {
       window.removeEventListener("click", handleMouseClick);
       window.removeEventListener("mousemove", handleMouseMove);
+      dispatch(hinter({ id: hints[0], with: undefined }));
+      dispatch(hinter({ id: hints[1], with: undefined }));
+      dispatch(hinter({ id: hints[2], with: undefined }));
     };
   });
 }

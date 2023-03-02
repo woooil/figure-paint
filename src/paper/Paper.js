@@ -38,6 +38,10 @@ class Paper {
     );
   }
 
+  static get figures() {
+    return store.getState().figures.value;
+  }
+
   static saveAsPng() {
     const svgElement = Paper.element;
     const svgData = new XMLSerializer().serializeToString(svgElement);

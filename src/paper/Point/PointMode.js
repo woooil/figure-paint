@@ -6,9 +6,9 @@ import MovePointByClick from "./MovePointByClick";
 import RemovePointByClick from "./RemovePointByClick";
 
 const MODE = {
-  createPointByClick: "Click where to create new point",
+  createPointByClick: "Click where to create a new point",
   createPointByRotPnt:
-    "Enter a rotating angle, and click a point to rotate and then a reference point",
+    "Click a point to rotate, a reference point, and then where a new point is pointing",
   createPointOnSeg: "Click anywhere on an existing segment to create a point",
   createPointByTwoLines:
     "Click two lines which make an intersection as a new point",

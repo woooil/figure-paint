@@ -13,7 +13,7 @@ class Coord {
   /**
    * Get a rotated Coord about the given reference Coord by the given angle.
    * @param   {Coord}   refCoord  - The reference Coord for the roation.
-   * @param   {number}  angle     - The angle by which the Coord is rotated.
+   * @param   {number}  angle     - The angle by which the Coord is rotated in degree.
    * @return  {Coord}               A rotated Coord object.
    * @see {@link https://gist.github.com/LukeChannings/5b3e0c6fd35e4ad6b47c}
    */
@@ -71,6 +71,18 @@ class Coord {
       mid.x + distance * Math.sin(theta),
       mid.y - distance * Math.cos(theta)
     );
+  }
+
+  /**
+   * Get an angle between a and b having itself as the vertex in the range -180 to +180 in degree.
+   * @param {Coord} a - The Coord on one side of the angle.
+   * @param {Coord} b - The Coord on another side of the angle.
+   */
+  angleBetween(a, b) {
+    const result =
+      Math.atan2(b.y - this.y, b.x - this.x) -
+      Math.atan2(a.y - this.y, a.x - this.x);
+    return (result * 180) / Math.PI;
   }
 }
 
