@@ -9,54 +9,75 @@ import clickJudge from "../clickJudge";
 function CreateSegByClkEndpnts() {
   const dispatch = useDispatch();
 
+  // Current step of creating Segment; 0 for selecting first Point, 1 for selecting second Point
+  var step = 0;
+  // Id of first Point, second Point and Segment; undefined if not exists
+  var ids = [undefined, undefined, undefined];
+  // Call when mouse is moved; update first Point
+  const updateFstPoint = (event) => {
+    const id = clickJudge(event, TYPE.Point);
+    // If mouse is on Point which is different from the old first, set the Point as the first
+    if (id && id !== ids[0]) {
+      ids[0] = id;
+      dispatch(update({ id: id, with: { isHint: true } }));
+    }
+    // Else if mouse gets out of Point, lift the Point as the first
+    else if (ids[0] && !id) {
+      dispatch(update({ id: ids[0], with: { isHint: false } }));
+      ids[0] = undefined;
+    }
+  };
+  // Call when mouse is clicked; select first Point
+  const selectFstPoint = () => {
+    if (ids[0]) {
+      step = 1;
+    }
+  };
+  // Call when mouse is moved; update second Point
+  const updateSndPoint = (event) => {
+    const id = clickJudge(event, TYPE.Point);
+    // If mouse is on Point which is different from the old first, set the Point as the second
+    if (id && id !== ids[1] && id !== ids[0]) {
+      ids[1] = id;
+      const segment = Segment.byEndpnts(ids[0], ids[1]);
+      ids[2] = segment.id;
+      dispatch(create(segment));
+      dispatch(setDep({ determinant: ids[0], dependant: ids[2] }));
+      dispatch(setDep({ determinant: ids[1], dependant: ids[2] }));
+      dispatch(update({ id: ids[2], with: { isHint: true } }));
+      dispatch(update({ id: id, with: { isHint: true } }));
+    }
+    // Else if mouse gets out of Point, lift the Point as the second
+    else if (ids[1] && !id) {
+      dispatch(update({ id: ids[1], with: { isHint: false } }));
+      dispatch(remove(ids[2]));
+      ids = [undefined, undefined];
+    }
+  };
+  // Call when mouse is clicked; select second Point
+  const selectSndPoint = () => {
+    if (ids[1]) {
+      dispatch(update({ id: ids[0], with: { isHint: false } }));
+      dispatch(update({ id: ids[1], with: { isHint: false } }));
+      dispatch(update({ id: ids[2], with: { isHint: false } }));
+      step = 0;
+      ids = [undefined, undefined, undefined];
+    }
+  };
+
   useEffect(() => {
-    let endpoints = [];
-    var hint = undefined;
-    var activeId = false;
     const handleMouseMove = (event) => {
-      const id = clickJudge(event, TYPE.Point);
-      if (id !== undefined) {
-        if (activeId !== id) {
-          dispatch(update({ id: id, with: { isHint: true } }));
-          if (endpoints.length > 0) {
-            hint = Segment.byEndpnts(endpoints[0], id);
-            dispatch(create(hint));
-            dispatch(setDep({ determinant: endpoints[0], dependant: hint.id }));
-            dispatch(setDep({ determinant: id, dependant: hint.id }));
-            dispatch(update({ id: hint.id, with: { isHint: true } }));
-          }
-          activeId = id;
-        }
-      } else if (activeId) {
-        if (endpoints.length === 0 || endpoints[0] !== activeId) {
-          dispatch(
-            update({
-              id: activeId,
-              with: { isHint: false },
-            })
-          );
-        }
-        if (hint) {
-          dispatch(remove(hint.id));
-          hint = undefined;
-        }
-        activeId = false;
+      if (step === 0) {
+        updateFstPoint(event);
+      } else {
+        updateSndPoint(event);
       }
     };
-    const handleMouseClick = (event) => {
-      const id = clickJudge(event, TYPE.Point);
-      if (
-        id !== undefined &&
-        (endpoints.length === 0 || id.id !== endpoints[0])
-      ) {
-        endpoints.push(id);
-      }
-      if (endpoints.length === 2) {
-        dispatch(update({ id: hint.id, with: { isHint: false } }));
-        dispatch(update({ id: endpoints[0], with: { isHint: false } }));
-        dispatch(update({ id: endpoints[1], with: { isHint: false } }));
-        endpoints = [];
-        hint = undefined;
+    const handleMouseClick = () => {
+      if (step === 0) {
+        selectFstPoint();
+      } else {
+        selectSndPoint();
       }
     };
     window.addEventListener("click", handleMouseClick);
