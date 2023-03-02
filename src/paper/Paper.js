@@ -98,30 +98,12 @@ class Paper {
 
 const DrawPaper = () => {
   const figures = useSelector((state) => state.figures.value);
-  const hints = useSelector((state) => state.figures.hints);
 
   useEffect(() => {
     console.log("figure updated:", figures);
   }, [figures]);
 
-  return (
-    <svg className={Paper.className}>
-      {figures.map((figure) => figure.draw)}
-      <defs>
-        <clipPath id={`hint-clipping`}>
-          {hints.map((hint) => hint.draw)}
-        </clipPath>
-      </defs>
-      <rect
-        x={0}
-        y={0}
-        width={1000}
-        height={1000}
-        clipPath={`url(#hint-clipping)`}
-        className="hintLayer"
-      />
-    </svg>
-  );
+  return <svg className={Paper.className}>{figures.map((f) => f.draw)}</svg>;
 };
 
 export default Paper;

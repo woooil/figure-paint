@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { create, setDep, hinter } from "../../Figure/figureSlice";
+import { create, update, setDep } from "../../Figure/figureSlice";
 import { TYPE } from "../../Figure/Figure";
 import Paper from "../Paper";
 import Point from "../../Figure/Point";
-import Figure from "../../Figure/Figure";
 
 import clickJudge from "../clickJudge";
 
@@ -14,7 +13,7 @@ function CreatePointByRotPnt() {
 
   useEffect(() => {
     let points = [];
-    const hints = [Figure.newId(), Figure.newId(), Figure.newId()];
+    var hint = undefined;
     var activeId = false;
     const handleMouseMove = (event) => {
       if (points.length > 1) {
@@ -26,17 +25,26 @@ function CreatePointByRotPnt() {
             Paper.offsetOf(event)
           );
         const newPoint = Point.byRotPnt(points[0], points[1], angle);
-        dispatch(hinter({ id: hints[2], with: newPoint }));
+        if (hint) {
+          dispatch(update({ id: hint.id, with: { def: newPoint.def } }));
+        } else {
+          hint = newPoint;
+          dispatch(create(hint));
+          dispatch(setDep({ determinant: points[0], dependant: hint.id }));
+          dispatch(setDep({ determinant: points[1], dependant: hint.id }));
+          dispatch(update({ id: hint.id, with: { isHint: true } }));
+        }
       } else {
         const id = clickJudge(event, TYPE.Point);
         if (id !== undefined) {
           if (activeId !== id) {
-            const point = Paper.figures.fig(id);
-            dispatch(hinter({ id: hints[points.length], with: point }));
+            dispatch(update({ id: id, with: { isHint: true } }));
             activeId = id;
           }
         } else if (activeId) {
-          dispatch(hinter({ id: hints[points.length], with: undefined }));
+          if (points.length === 0 || points[0] !== activeId) {
+            dispatch(update({ id: activeId, with: { isHint: false } }));
+          }
           activeId = false;
         }
       }
@@ -48,22 +56,13 @@ function CreatePointByRotPnt() {
           points.push(id);
         }
       } else {
-        const figures = Paper.figures;
-        const angle = figures
-          .fig(points[1])
-          .coord.angleBetween(
-            figures.fig(points[0]).coord,
-            Paper.offsetOf(event)
-          );
         if (points.length === 2) {
-          const figure = Point.byRotPnt(points[0], points[1], angle);
-          dispatch(create(figure));
-          dispatch(setDep({ determinant: points[0], dependant: figure.id }));
-          dispatch(setDep({ determinant: points[1], dependant: figure.id }));
+          dispatch(update({ id: hint.id, with: { isHint: false } }));
+          dispatch(update({ id: points[0], with: { isHint: false } }));
+          dispatch(update({ id: points[1], with: { isHint: false } }));
           points = [];
-          dispatch(hinter({ id: hints[0], with: undefined }));
-          dispatch(hinter({ id: hints[1], with: undefined }));
-          dispatch(hinter({ id: hints[2], with: undefined }));
+          hint = undefined;
+          activeId = false;
         }
       }
     };
@@ -72,9 +71,6 @@ function CreatePointByRotPnt() {
     return () => {
       window.removeEventListener("click", handleMouseClick);
       window.removeEventListener("mousemove", handleMouseMove);
-      dispatch(hinter({ id: hints[0], with: undefined }));
-      dispatch(hinter({ id: hints[1], with: undefined }));
-      dispatch(hinter({ id: hints[2], with: undefined }));
     };
   });
 }

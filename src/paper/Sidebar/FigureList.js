@@ -52,7 +52,7 @@ function FigureList(props) {
           {figures.map((f, index) => (
             <ListItem disablePadding key={index}>
               <Tooltip title={definition(f.description)} placement="right">
-                <Button fullWidth>
+                <Button fullWidth className={f.isHint ? "hint-button" : ""}>
                   {f.type} {f.name}
                 </Button>
               </Tooltip>

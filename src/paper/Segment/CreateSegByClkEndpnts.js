@@ -1,11 +1,9 @@
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
-import { create, setDep, hinter } from "../../Figure/figureSlice";
+import { create, update, remove, setDep } from "../../Figure/figureSlice";
 import { TYPE } from "../../Figure/Figure";
 import Segment from "../../Figure/Segment";
-import Figure from "../../Figure/Figure";
-import Paper from "../Paper";
 import clickJudge from "../clickJudge";
 
 function CreateSegByClkEndpnts() {
@@ -13,24 +11,34 @@ function CreateSegByClkEndpnts() {
 
   useEffect(() => {
     let endpoints = [];
-    const hints = [Figure.newId(), Figure.newId(), Figure.newId()];
+    var hint = undefined;
     var activeId = false;
     const handleMouseMove = (event) => {
       const id = clickJudge(event, TYPE.Point);
       if (id !== undefined) {
         if (activeId !== id) {
-          const point = Paper.figures.fig(id);
-          dispatch(hinter({ id: hints[endpoints.length], with: point }));
+          dispatch(update({ id: id, with: { isHint: true } }));
           if (endpoints.length > 0) {
-            const segment = Segment.byEndpnts(endpoints[0], id);
-            dispatch(hinter({ id: hints[2], with: segment }));
+            hint = Segment.byEndpnts(endpoints[0], id);
+            dispatch(create(hint));
+            dispatch(setDep({ determinant: endpoints[0], dependant: hint.id }));
+            dispatch(setDep({ determinant: id, dependant: hint.id }));
+            dispatch(update({ id: hint.id, with: { isHint: true } }));
           }
           activeId = id;
         }
       } else if (activeId) {
-        dispatch(hinter({ id: hints[endpoints.length], with: undefined }));
-        if (endpoints.length > 0) {
-          dispatch(hinter({ id: hints[2], with: undefined }));
+        if (endpoints.length === 0 || endpoints[0] !== activeId) {
+          dispatch(
+            update({
+              id: activeId,
+              with: { isHint: false },
+            })
+          );
+        }
+        if (hint) {
+          dispatch(remove(hint.id));
+          hint = undefined;
         }
         activeId = false;
       }
@@ -44,14 +52,11 @@ function CreateSegByClkEndpnts() {
         endpoints.push(id);
       }
       if (endpoints.length === 2) {
-        const segment = Segment.byEndpnts(endpoints[0], endpoints[1]);
-        dispatch(create(segment));
-        dispatch(setDep({ determinant: endpoints[0], dependant: segment.id }));
-        dispatch(setDep({ determinant: endpoints[1], dependant: segment.id }));
+        dispatch(update({ id: hint.id, with: { isHint: false } }));
+        dispatch(update({ id: endpoints[0], with: { isHint: false } }));
+        dispatch(update({ id: endpoints[1], with: { isHint: false } }));
         endpoints = [];
-        dispatch(hinter({ id: hints[0], with: undefined }));
-        dispatch(hinter({ id: hints[1], with: undefined }));
-        dispatch(hinter({ id: hints[2], with: undefined }));
+        hint = undefined;
       }
     };
     window.addEventListener("click", handleMouseClick);
@@ -59,9 +64,6 @@ function CreateSegByClkEndpnts() {
     return () => {
       window.removeEventListener("click", handleMouseClick);
       window.removeEventListener("mousemove", handleMouseMove);
-      dispatch(hinter({ id: hints[0], with: undefined }));
-      dispatch(hinter({ id: hints[1], with: undefined }));
-      dispatch(hinter({ id: hints[2], with: undefined }));
     };
   });
 }
