@@ -26,8 +26,6 @@ Object.freeze(TYPE);
 
 /** Class representing a figure. */
 class Figure {
-  #id;
-
   /**
    * Create a Figure.
    * @param {FigType} type            - The type of a Figure.
@@ -44,7 +42,7 @@ class Figure {
       dependants: encodedDependants,
       ...extra
     } = encodedObj;
-    this.#id = encodedId || uuidv4().slice(-4);
+    this.id = encodedId || Figure.newId();
     this.type = encodedType || type;
     this.def = encodedDef || { by, ...props };
     this.determinants = encodedDeterminants || [];
@@ -52,12 +50,8 @@ class Figure {
     Object.assign(this, extra);
   }
 
-  /**
-   * The id of the Figure.
-   * @type {Id}
-   */
-  get id() {
-    return this.#id;
+  static newId() {
+    return uuidv4().slice(-4);
   }
 
   /**

@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 import { create, setDep } from "../../Figure/figureSlice";
@@ -7,7 +7,6 @@ import Line from "../../Figure/Line";
 import clickJudge from "../clickJudge";
 
 function CreateLineByClkLine() {
-  const figures = useSelector((state) => state.figures.value);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,9 +14,9 @@ function CreateLineByClkLine() {
     let point = undefined;
     const handleMouseClick = (event) => {
       if (refLine === undefined) {
-        refLine = clickJudge(figures, event, TYPE.Line);
+        refLine = clickJudge(event, TYPE.Line);
       } else if (point === undefined) {
-        point = clickJudge(figures, event, TYPE.Point);
+        point = clickJudge(event, TYPE.Point);
       }
 
       if (refLine !== undefined && point !== undefined) {

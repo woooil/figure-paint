@@ -126,23 +126,29 @@ export const figureSlice = createSlice({
     /**
      * Create a new hint or update some properties of a hint with the given data or delete a hint.
      * @param {Id}      action.payload.id   - The id of the Figure to update.
-     * @param {Figure|Object|undefined}  action.payload.with - The data to update the Figure with. e.g. { def: { ... } }
+     * @param {Figure|undefined}  action.payload.with - The data to update the Figure with. e.g. { def: { ... } }
      */
     hinter: (state, action) => {
       const index = state.hints.findIndex((f) => f.id === action.payload.id);
-      if (index < 0) {
-        // Create a new hint
-        action.payload.with.isHint = true;
-        state.hints.push(action.payload.with);
-      } else if (action.payload.with === undefined) {
+      if (action.payload.with === undefined) {
         // Remove an existing hint
-        state.hints.splice(index, 1);
+        if (index >= 0) {
+          state.hints.splice(index, 1);
+        }
+      } else if (index < 0) {
+        // Create a new hint
+        const hint = Object.assign(
+          Object.create(Object.getPrototypeOf(action.payload.with)),
+          { ...action.payload.with, id: action.payload.id, isHint: true }
+        );
+        state.hints.push(hint);
       } else {
         // Update an existing hint
-        const figure = current(state.hints)[index];
-        Object.assign(figure, action.payload.with);
-        state.hints.splice(index, 1);
-        state.hints.splice(index, 0, figure);
+        const hint = Object.assign(
+          Object.create(Object.getPrototypeOf(action.payload.with)),
+          { ...action.payload.with, id: action.payload.id, isHint: true }
+        );
+        state.hints[index] = hint;
       }
     },
   },

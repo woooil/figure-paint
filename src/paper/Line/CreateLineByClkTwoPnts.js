@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 import { create, setDep } from "../../Figure/figureSlice";
@@ -7,13 +7,12 @@ import Line from "../../Figure/Line";
 import clickJudge from "../clickJudge";
 
 function CreateLineByClkTwoPnts() {
-  const figures = useSelector((state) => state.figures.value);
   const dispatch = useDispatch();
 
   useEffect(() => {
     let points = [];
     const handleMouseClick = (event) => {
-      const element = clickJudge(figures, event, TYPE.Point);
+      const element = clickJudge(event, TYPE.Point);
       if (
         element !== undefined &&
         (points.length === 0 || element.id !== points[0])

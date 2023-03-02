@@ -14,7 +14,7 @@ function CreatePointOnSeg() {
   useEffect(() => {
     let segment = undefined;
     const handleMouseClick = (event) => {
-      segment = clickJudge(figures, event, TYPE.Segment);
+      segment = clickJudge(event, TYPE.Segment);
       if (segment !== undefined) {
         const segmentObj = figures.fig(segment);
         const coord = Paper.offsetOf(event);

@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 import { create, setDep } from "../../Figure/figureSlice";
@@ -7,13 +7,12 @@ import Point from "../../Figure/Point";
 import clickJudge from "../clickJudge";
 
 function CreatePointByTwoLines() {
-  const figures = useSelector((state) => state.figures.value);
   const dispatch = useDispatch();
 
   useEffect(() => {
     let lines = [];
     const handleMouseClick = (event) => {
-      const element = clickJudge(figures, event, TYPE.Line);
+      const element = clickJudge(event, TYPE.Line);
       if (
         element !== undefined &&
         (lines.length === 0 || element.id !== lines[0])

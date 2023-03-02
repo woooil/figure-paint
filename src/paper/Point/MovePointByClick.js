@@ -15,7 +15,7 @@ function MovePointByClick() {
     let id = undefined;
     const handleMouseClick = (event) => {
       if (id === undefined) {
-        id = clickJudge(figures, event, TYPE.Point);
+        id = clickJudge(event, TYPE.Point);
       } else {
         if (Paper.isUnder(event)) {
           const coord = Paper.offsetOf(event);

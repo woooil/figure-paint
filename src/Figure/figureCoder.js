@@ -11,7 +11,7 @@ const figureCoder = {
    * @returns {Object}       The encoded object.
    */
   encode: (fig) => {
-    return { ...fig, id: fig.id };
+    return fig;
   },
 
   /**
