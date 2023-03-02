@@ -51,7 +51,7 @@ function CreateSegByClkEndpnts() {
     else if (ids[1] && !id) {
       dispatch(update({ id: ids[1], with: { isHint: false } }));
       dispatch(remove(ids[2]));
-      ids = [undefined, undefined];
+      ids = [ids[0], undefined, undefined];
     }
   };
   // Call when mouse is clicked; select second Point
