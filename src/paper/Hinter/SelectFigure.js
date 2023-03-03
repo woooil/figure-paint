@@ -24,7 +24,7 @@ function SelectFigure({
       dispatch(update({ id: id, with: { isHint: true } }));
       // If new figure is created
       if (withCreate) {
-        const figure = withCreate.generator(id);
+        const figure = withCreate.generator(event, id);
         idCreated = figure.id;
         dispatch(create(figure));
         (withCreate.determinants ? withCreate.determinants : []).forEach((d) =>
@@ -44,6 +44,11 @@ function SelectFigure({
       }
       id = undefined;
       idCreated = undefined;
+    }
+
+    if (idUnder && withCreate && withCreate.precise) {
+      const def = withCreate.generator(event, id).def;
+      dispatch(update({ id: idCreated, with: { def: def } }));
     }
   };
   // When mouse is clicked, select Figure

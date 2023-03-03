@@ -6,7 +6,7 @@ import SelectFigure from "../Hinter/SelectFigure";
 function CreateLabelByClick() {
   const setPoint = useState(undefined)[1];
 
-  const generator = (id) => {
+  const generator = (_, id) => {
     return Label.byPointName(id, 0, -10);
   };
 

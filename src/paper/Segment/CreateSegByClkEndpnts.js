@@ -6,7 +6,7 @@ import SelectFigure from "../Hinter/SelectFigure";
 function CreateSegByClkEndpnts() {
   const [fstPnt, setFstPnt] = useState(undefined);
   const setSndPnt = useState(undefined)[1];
-  const generator = (id) => {
+  const generator = (_, id) => {
     return Segment.byEndpnts(fstPnt, id);
   };
 
