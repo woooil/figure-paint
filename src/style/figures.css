@@ -20,3 +20,7 @@
   fill: #aaa;
   color: #aaa;
 }
+
+.hint > path {
+  stroke: #aaa;
+}

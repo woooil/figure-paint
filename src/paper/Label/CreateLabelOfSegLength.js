@@ -1,33 +1,24 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 
-import { create, setDep } from "../../Figure/figureSlice";
 import { TYPE } from "../../Figure/Figure";
 import Label from "../../Figure/Label";
-import clickJudge from "../clickJudge";
+import SelectFigure from "../Hinter/SelectFigure";
 
 function CreateLabelOfSegLength() {
-  const dispatch = useDispatch();
-
   const [text, setText] = useState("");
-
-  useEffect(() => {
-    const handleMouseClick = (event) => {
-      const element = clickJudge(event, TYPE.Segment);
-      if (element !== undefined) {
-        const figure = Label.bySegLength(element, text);
-        dispatch(create(figure));
-        dispatch(setDep({ determinant: element, dependant: figure.id }));
-      }
-    };
-    window.addEventListener("click", handleMouseClick);
-    return () => {
-      window.removeEventListener("click", handleMouseClick);
-    };
-  });
+  const generator = (_, id) => {
+    return Label.bySegLength(id, text);
+  };
 
   return (
-    <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
+    <>
+      <input
+        type="text"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <SelectFigure type={TYPE.Segment} withCreate={{ generator }} />
+    </>
   );
 }
 
