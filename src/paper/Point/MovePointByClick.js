@@ -1,47 +1,22 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
-import { update, liftDep } from "../../Figure/figureSlice";
+import { useState } from "react";
 import Paper from "../Paper";
 import Point from "../../Figure/Point";
 import { TYPE } from "../../Figure/Figure";
-import clickJudge from "../clickJudge";
+import SetFigure from "../Hinter/SetFigure";
+import SelectFigure from "../Hinter/SelectFigure";
 
 function MovePointByClick() {
-  const figures = useSelector((state) => state.figures.value);
-  const dispatch = useDispatch();
+  const [point, setPoint] = useState(undefined);
+  const generator = (event) => {
+    const coord = Paper.offsetOf(event);
+    return Point.byAbsCoord(coord.x, coord.y);
+  };
 
-  useEffect(() => {
-    let id = undefined;
-    const handleMouseClick = (event) => {
-      if (id === undefined) {
-        id = clickJudge(event, TYPE.Point);
-      } else {
-        if (Paper.isUnder(event)) {
-          const coord = Paper.offsetOf(event);
-          const figure = Point.byAbsCoord(coord.x, coord.y);
-          const payload = {
-            id: id,
-            with: {
-              def: figure.def,
-            },
-          };
-          dispatch(update(payload));
-          const determinants = figures.fig(id).determinants;
-          determinants.forEach((det) => {
-            dispatch(liftDep({ determinant: det, dependant: id }));
-          });
-          id = undefined;
-        }
-      }
-    };
-    window.addEventListener("click", handleMouseClick);
-    return () => {
-      window.removeEventListener("click", handleMouseClick);
-    };
-  });
-
-  return;
+  return !point ? (
+    <SelectFigure type={TYPE.Point} setId={setPoint} />
+  ) : (
+    <SetFigure generator={generator} existing={[point, setPoint]} />
+  );
 }
 
 export default MovePointByClick;

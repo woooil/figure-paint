@@ -34,7 +34,11 @@ class LinearEq {
       this.c === eq.c &&
       (this.b === 1 || (this.a === 1 && this.b === 0))
     ) {
-      return "Coincident";
+      if (this.b === 1) {
+        return new Coord(0, -this.c);
+      } else {
+        return new Coord(-this.c, 0);
+      }
     }
 
     // Parallel if [ a = a' AND b = b' = 1 AND c != c' ] OR [ a = a' = 1 AND b = b' = 0 AND c != c' ]
@@ -44,7 +48,12 @@ class LinearEq {
       this.c !== eq.c &&
       (this.b === 1 || (this.a === 1 && this.b === 0))
     ) {
-      return "Parallel";
+      const BIGINT = 9999999999;
+      if (this.b === 0 || (this.b === 1 && (this.a > 1 || this.a < -1))) {
+        return new Coord(-(BIGINT + this.c) / this.a, BIGINT);
+      } else {
+        return new Coord(BIGINT, -(BIGINT + this.c) / this.b);
+      }
     }
 
     const denom = this.a * eq.b - eq.a * this.b;

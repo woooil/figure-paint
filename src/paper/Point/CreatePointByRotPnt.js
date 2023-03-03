@@ -4,7 +4,7 @@ import Paper from "../Paper";
 import Point from "../../Figure/Point";
 
 import SelectFigure from "../Hinter/SelectFigure";
-import CreateFigure from "../Hinter/CreateFigure";
+import SetFigure from "../Hinter/SetFigure";
 
 function CreatePointByRotPnt() {
   const [fstPnt, setFstPnt] = useState(undefined);
@@ -22,7 +22,7 @@ function CreatePointByRotPnt() {
   ) : !sndPnt ? (
     <SelectFigure type={TYPE.Point} setId={setSndPnt} exclude={[fstPnt]} />
   ) : (
-    <CreateFigure
+    <SetFigure
       generator={generator}
       determinants={[
         [fstPnt, setFstPnt],

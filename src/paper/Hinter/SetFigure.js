@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { create, update, remove, setDep } from "../../Figure/figureSlice";
 import Paper from "../Paper";
 
-function CreateFigure({ generator, determinants = [] }) {
+function SetFigure({ generator, determinants = [], existing = undefined }) {
   const dispatch = useDispatch();
 
   // Id of Figure instance; undefined if not exists
@@ -15,6 +15,9 @@ function CreateFigure({ generator, determinants = [] }) {
     if (Paper.isUnder(event)) {
       const figure = generator(event);
       // If Figure doesn't exist, first create Figure
+      if (existing && !id) {
+        id = existing[0];
+      }
       if (!id) {
         id = figure.id;
         dispatch(create(figure));
@@ -28,7 +31,9 @@ function CreateFigure({ generator, determinants = [] }) {
     }
     // Else if mouse gets out of Paper, remove Figure
     else if (id) {
-      dispatch(remove(id));
+      if (!existing) {
+        dispatch(remove(id));
+      }
       id = undefined;
     }
   };
@@ -41,6 +46,9 @@ function CreateFigure({ generator, determinants = [] }) {
         d[1](undefined);
       });
       id = undefined;
+      if (existing) {
+        existing[1](undefined);
+      }
     }
   };
 
@@ -54,4 +62,4 @@ function CreateFigure({ generator, determinants = [] }) {
   });
 }
 
-export default CreateFigure;
+export default SetFigure;

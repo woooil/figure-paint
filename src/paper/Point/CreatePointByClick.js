@@ -1,6 +1,6 @@
 import Paper from "../Paper";
 import Point from "../../Figure/Point";
-import CreateFigure from "../Hinter/CreateFigure";
+import SetFigure from "../Hinter/SetFigure";
 
 function CreatePointByClick() {
   const generator = (event) => {
@@ -8,7 +8,7 @@ function CreatePointByClick() {
     return Point.byAbsCoord(coord.x, coord.y);
   };
 
-  return <CreateFigure generator={generator} />;
+  return <SetFigure generator={generator} />;
 }
 
 export default CreatePointByClick;
