@@ -1,37 +1,24 @@
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useState } from "react";
 
-import { create, setDep } from "../../Figure/figureSlice";
 import { TYPE } from "../../Figure/Figure";
 import Point from "../../Figure/Point";
-import clickJudge from "../clickJudge";
+import SelectFigure from "../Hinter/SelectFigure";
 
 function CreatePointByTwoLines() {
-  const dispatch = useDispatch();
+  const [line, setLine] = useState(undefined);
+  const generator = (_, id) => {
+    return Point.byIntsec(line, id);
+  };
 
-  useEffect(() => {
-    let lines = [];
-    const handleMouseClick = (event) => {
-      const element = clickJudge(event, TYPE.Line);
-      if (
-        element !== undefined &&
-        (lines.length === 0 || element.id !== lines[0])
-      ) {
-        lines.push(element);
-      }
-      if (lines.length === 2) {
-        const point = Point.byIntsec(lines[0], lines[1]);
-        dispatch(create(point));
-        dispatch(setDep({ determinant: lines[0], dependant: point.id }));
-        dispatch(setDep({ determinant: lines[1], dependant: point.id }));
-        lines = [];
-      }
-    };
-    window.addEventListener("click", handleMouseClick);
-    return () => {
-      window.removeEventListener("click", handleMouseClick);
-    };
-  });
+  return !line ? (
+    <SelectFigure type={TYPE.Line} setId={setLine} />
+  ) : (
+    <SelectFigure
+      type={TYPE.Line}
+      exclude={[line]}
+      withCreate={{ generator, determinants: [[line, setLine]] }}
+    />
+  );
 }
 
 export default CreatePointByTwoLines;
