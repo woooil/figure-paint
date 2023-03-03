@@ -1,33 +1,21 @@
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
 import { update } from "../../Figure/figureSlice";
 import { TYPE } from "../../Figure/Figure";
-import clickJudge from "../clickJudge";
+import SelectFigure from "../Hinter/SelectFigure";
 
 function HideLineByClick() {
   const dispatch = useDispatch();
+  const [line, setLine] = useState(undefined);
 
   useEffect(() => {
-    const handleMouseClick = (event) => {
-      const id = clickJudge(event, TYPE.Line);
-      if (id !== undefined) {
-        const payload = {
-          id: id,
-          with: {
-            visible: false,
-          },
-        };
-        dispatch(update(payload));
-      }
-    };
-    window.addEventListener("click", handleMouseClick);
-    return () => {
-      window.removeEventListener("click", handleMouseClick);
-    };
-  });
+    if (line) {
+      dispatch(update({ id: line, with: { visible: false } }));
+    }
+  }, [line, dispatch]);
 
-  return;
+  return <SelectFigure type={TYPE.Line} setId={setLine} />;
 }
 
 export default HideLineByClick;

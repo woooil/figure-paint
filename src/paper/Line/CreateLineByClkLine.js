@@ -1,38 +1,22 @@
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-
-import { create, setDep } from "../../Figure/figureSlice";
+import { useState } from "react";
 import { TYPE } from "../../Figure/Figure";
 import Line from "../../Figure/Line";
-import clickJudge from "../clickJudge";
+import SelectFigure from "../Hinter/SelectFigure";
 
 function CreateLineByClkLine() {
-  const dispatch = useDispatch();
+  const [line, setLine] = useState(undefined);
+  const generator = (_, id) => {
+    return Line.byParLn(line, id);
+  };
 
-  useEffect(() => {
-    let refLine = undefined;
-    let point = undefined;
-    const handleMouseClick = (event) => {
-      if (refLine === undefined) {
-        refLine = clickJudge(event, TYPE.Line);
-      } else if (point === undefined) {
-        point = clickJudge(event, TYPE.Point);
-      }
-
-      if (refLine !== undefined && point !== undefined) {
-        const line = Line.byParLn(refLine, point);
-        dispatch(create(line));
-        dispatch(setDep({ determinant: refLine, dependant: line.id }));
-        dispatch(setDep({ determinant: point, dependant: line.id }));
-        refLine = undefined;
-        point = undefined;
-      }
-    };
-    window.addEventListener("click", handleMouseClick);
-    return () => {
-      window.removeEventListener("click", handleMouseClick);
-    };
-  });
+  return !line ? (
+    <SelectFigure type={TYPE.Line} setId={setLine} />
+  ) : (
+    <SelectFigure
+      type={TYPE.Point}
+      withCreate={{ generator, determinants: [[line, setLine]] }}
+    />
+  );
 }
 
 export default CreateLineByClkLine;

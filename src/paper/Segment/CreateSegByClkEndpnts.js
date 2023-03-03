@@ -5,7 +5,6 @@ import SelectFigure from "../Hinter/SelectFigure";
 
 function CreateSegByClkEndpnts() {
   const [fstPnt, setFstPnt] = useState(undefined);
-  const setSndPnt = useState(undefined)[1];
   const generator = (_, id) => {
     return Segment.byEndpnts(fstPnt, id);
   };
@@ -16,7 +15,6 @@ function CreateSegByClkEndpnts() {
     <SelectFigure
       type={TYPE.Point}
       exclude={[fstPnt]}
-      setId={setSndPnt}
       withCreate={{ generator, determinants: [[fstPnt, setFstPnt]] }}
     />
   );
